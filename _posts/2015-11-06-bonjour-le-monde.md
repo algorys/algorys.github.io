@@ -12,13 +12,13 @@ share:
 ---
 
 Bienvenue sur mon Blog fraichement ouvert.
-<p style="text-align:justify">
+
 Ce blog est destiné avant tout aux intégrateurs et aux administrateurs qui cherchent à réaliser un boucle complète d'intégration. Il aura pour but de documenter l'installation de serveurs utiles à l'intégration et de tout sujet tournant autour, comme par exemple des tutos sur :
-</p>
- * Jenkins
- * Redmine
- * Gitlab
- * Dokuwiki
- * Connexions ssh entre ces serveurs, etc...
+
+* Jenkins
+* Redmine
+* Gitlab
+* Dokuwiki
+* Connexions ssh entre ces serveurs, etc...
 
 
