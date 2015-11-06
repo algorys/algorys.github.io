@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Bonjour le monde"
+title: "Ca y est c'est ouvert !"
 modified: 2015-11-06 14:56:15 +0100
 tags: [intro]
 image:
@@ -11,9 +11,9 @@ comments:
 share: 
 ---
 
-Bienvenue sur mon Blog fraichement ouvert.
+Bienvenue sur mon Blog
 
-Ce blog est destiné avant tout aux intégrateurs et aux administrateurs qui cherchent à réaliser un boucle complète d'intégration. Il aura pour but de documenter l'installation de serveurs utiles à l'intégration et de tout sujet tournant autour, comme par exemple des tutos sur :
+Ce blog est destiné avant tout aux intégrateurs et aux administrateurs qui cherchent à réaliser une boucle complète d'intégration. Il aura pour but de documenter l'installation de serveurs utiles à l'intégration et de tout sujet tournant autour, comme par exemple des tutos sur :
 
 * Jenkins
 * Redmine
