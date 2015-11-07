@@ -1,33 +1,12 @@
-# Neo-HPSTR Jekyll Theme
-Based on https://github.com/mmistakes/hpstr-jekyll-theme
+# Sources du Blog d'Algorys
+Ce dépôt sert à générer mon blog [http://algorys.github.io](http://algorys.github.io).
 
-Demo: http://aronbordin.com/neo-hpstr-jekyll-theme
+Ce blog est destiné avant tout aux intégrateurs et administrateurs qui cherchent à réaliser une boucle complète d’intégration et de gestion de projets. Il aura pour but de documenter l’installation de serveurs et de tout sujet tournant autour, comme par exemple :
 
-# Live Demo
+* [Gitlab](https://gitlab.com) pour la gestion et le versionnement des sources.
+* [Doxygen](www.doxygen.org/) pour la documentation du code.
+* [Jenkins](https://jenkins-ci.org) pour l'automatisation des taches et des compilations.
+* [Redmine](www.redmine.org/) pour la gestion des projets.
+* [Dokuwiki](https://www.dokuwiki.org/) pour la documentation en général.
+* [Prosody](https://prosody.im/) pour la messagerie instantanée.
 
-You can see it running [here](http://blog.rhesoft.com/) and [here](http://aronbordin.com/neo-hpstr-jekyll-theme/).
-
-
-## What HPSTR brings to the table:
-
-* Modern design.
-* Responsive templates for post, page, and post index `_layouts`. Looks great on mobile, tablet, and desktop devices.
-* Gracefully degrades in older browsers. Compatible with Internet Explorer 8+ and all modern browsers.  
-* Sweet topbar animated menu with support for drop-downs.
-* Optional [Disqus](http://disqus.com) comments and social sharing links.
-* [Open Graph](https://developers.facebook.com/docs/opengraph/) and [Twitter Cards](https://dev.twitter.com/docs/cards) support for a better social sharing experience.
-* Simple [custom 404 page](http://mmistakes.github.io/hpstr-jekyll-theme/404.html) to get you started.
-* Stylesheets for Pygments and Coderay [syntax highlighting](http://mmistakes.github.io/hpstr-jekyll-theme/code-highlighting-post/) to make your code examples look snazzy
-* Author panel, with social links
-* Read more tag support(similar with Wordpress ).
-
-![Preview](http://aron-bordin.github.io/neo-hpstr-jekyll-theme/images/neo-hpstr-jekyll-theme-preview.png)
-
-
----
-
-## Getting Started
-
-Neo-HPSTR takes advantage of Sass and data files to make customizing easier. These features require Jekyll 2.x and will not work with older versions of Jekyll.
-
-To learn how to install and use this theme check out the [Setup Guide(Original)](http://mmistakes.github.io/hpstr-jekyll-theme/theme-setup/) for more information.
