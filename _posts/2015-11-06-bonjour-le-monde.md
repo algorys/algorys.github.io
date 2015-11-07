@@ -3,6 +3,7 @@ layout: post
 title: "Ca y est c'est ouvert !"
 modified: 2015-11-06 14:56:15 +0100
 tags: [intro]
+categories: [intro]
 image:
   feature: 
   credit: 
@@ -19,6 +20,6 @@ Ce blog est destiné avant tout aux intégrateurs et aux administrateurs qui che
 * Redmine
 * Gitlab
 * Dokuwiki
-* Connexions ssh entre ces serveurs, etc...
+* Connexions ssh entre ces serveurs, paramétrage des serveurs web, etc...
 
 
