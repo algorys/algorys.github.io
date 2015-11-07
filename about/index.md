@@ -19,11 +19,12 @@ Et je vais essayer de partager ce que j'ai pu faire :) :-)
 NB : ma boite créé des logiciels.
 
 Ma boucle comprend en tout les serveurs suivant :
-* [Gitlab](https://gitlab.com) pour la gestion et le versionnement des sources.
-* [Doxygen](www.doxygen.org/) pour la documentation du code.
-* [Jenkins](https://jenkins-ci.org) pour l'automatisation.
-* [Redmine](www.redmine.org/) pour la gestion des projets.
-* [Dokuwiki](https://www.dokuwiki.org/) pour la documentation en général.
-* [Prosody](https://prosody.im/) pour la messagerie instantanée.
+
+ * [Gitlab](https://gitlab.com) pour la gestion et le versionnement des sources.
+ * [Doxygen](www.doxygen.org/) pour la documentation du code.
+ * [Jenkins](https://jenkins-ci.org) pour l'automatisation.
+ * [Redmine](www.redmine.org/) pour la gestion des projets.
+ * [Dokuwiki](https://www.dokuwiki.org/) pour la documentation en général.
+ * [Prosody](https://prosody.im/) pour la messagerie instantanée.
 
 Et évidemment pas mal d'outils annexes.
