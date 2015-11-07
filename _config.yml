@@ -4,9 +4,6 @@ disqus_shortname: algorysblog
 reading_time:     true
 words_per_minute: 150
 logo:             images/logo.png
-# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
-# When testing locally leave blank or use http://localhost:4000
-# url: http://aronbordin.com/neo-hpstr-jekyll-theme
 
 menu:
   - title: 'Algorys'
@@ -20,24 +17,24 @@ menu:
     type: 'categories'
   - title: 'Favorites'
     url: '#'
-    submenu:
-      - title: 'highlighter'
-        url: '/code-highlighting-post/'
-      - title: 'intro'
-        url: '/readability-post/'
+#    submenu:
+#      - title: 'highlighter'
+#        url: '/code-highlighting-post/'
+#      - title: 'intro'
+#        url: '/readability-post/'
 
 # Owner/author information
 owner:
   name:           Algorys
   site:           https://github.com/algorys
   avatar:         images/avatar.jpg
-  bio:            "Intégrateur amateur"
+  bio:            "Un intégrateur amateur"
   email:          ttamalfor<not4spam>@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter: agshmne
   #facebook:
   github: algorys
-  stackexchange: 4303902
+  #stackexchange: 4303902
   #linkedin:
   #instagram:
   #flickr:
