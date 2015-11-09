@@ -1,10 +1,11 @@
 title:            Algorys
+name:            Algorys
 description:      D'un intégrateur à un autre
 disqus_shortname: algorysblog
 reading_time:     true
 words_per_minute: 150
 logo:             images/logo.png
-
+url: http://algorys.github.io
 menu:
   - title: 'Algorys'
     url: '/'
@@ -24,12 +25,16 @@ menu:
 #        url: '/readability-post/'
 
 # Owner/author information
+author:
+  name: Algorys
+  email: "ttamalfor-not4spam@gmail.com"
+  uri: https://github.com/algorys
 owner:
   name:           Algorys
   site:           https://github.com/algorys
   avatar:         images/avatar.jpg
   bio:            "Un intégrateur amateur"
-  email:          ttamalfor<not4spam>@gmail.com
+  email:          ttamalfor-not4spam@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter: agshmne
   #facebook:
@@ -68,6 +73,7 @@ markdown:    kramdown
 gems:
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-feed
 sass:
   sass_dir: _sass
   style: compressed
