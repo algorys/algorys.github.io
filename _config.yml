@@ -1,69 +1,38 @@
-title:            Algorys
-name:            Algorys
-description:      D'un intégrateur à un autre
+title:            Sysadmin & Intégration
+description:      Le Blog d'Algorys
 disqus_shortname: algorysblog
 reading_time:     true
-words_per_minute: 150
-logo:             images/logo.png
-url: http://algorys.github.io
-menu:
-  - title: 'Algorys'
-    url: '/'
-  - title: 'A propos'
-    url: '/about'
-  - title: 'Tags'
-    url: '/tags'
-  - title: 'Categories'
-    url: '/categories'
-    type: 'categories'
-  - title: 'Favorites'
-    url: '#'
-#    submenu:
-#      - title: 'highlighter'
-#        url: '/code-highlighting-post/'
-#      - title: 'intro'
-#        url: '/readability-post/'
+words_per_minute: 200
+# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
+# When testing locally leave blank or use http://localhost:4000
+url:
 
 # Owner/author information
-author:
-  name: Algorys
-  email: "ttamalfor-not4spam@gmail.com"
-  uri: https://github.com/algorys
 owner:
-  name:           Algorys
-  site:           https://github.com/algorys
-  avatar:         images/avatar.jpg
-  bio:            "Un intégrateur amateur"
-  email:          ttamalfor-not4spam@gmail.com
+  name:           Estrada Matthieu
+  avatar:         avatar.jpg
+  bio:            "Développeur & Intégrateur amateur, avec une formation TSRIT. Je partage mes connaissances."
+  email:          "ttamalfor-not4spam@gmail.com"
   # Social networking links used in footer. Update and remove as you like.
-  twitter: agshmne
-  #facebook:
-  github: algorys
-  #stackexchange: 4303902
-  #linkedin:
-  #instagram:
-  #flickr:
-  #tumblr:
-  # google plus id, include the '+', eg +AronBordin
+  twitter: agshmne        
+  #facebook:       
+  github: algorys        
+  #stackexchange:  
+  #linkedin:       
+  #instagram:      
+  #flickr:         
+  #tumblr:         
+  # google plus id, include the '+', eg +mmistakes
   #google_plus:    +yourid
 
-social:
-  - title: "github"
-    url: "https://github.com/algorys"
-  - title: "stack-overflow"
-    url: "http://stackoverflow.com/users/4303902/mestra"
-  #- title: "linkedin"
-   # url: "https://br.linkedin.com/in/aronbordin"
-  #- title: "youtube"
-   # url: "https://www.youtube.com/channel/UCfnSek-9HPWOx5e2pH7VFgg"
 # Background image to be tiled on all pages
-#background:
+background: 
 
 # Analytics and webmaster tools stuff goes here
-#google_analytics:
-#google_verify:
+google_analytics:   
+google_verify:      
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-#bing_verify:
+bing_verify:         
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Europe/Paris
@@ -72,8 +41,6 @@ highlighter: pygments
 markdown:    kramdown
 gems:
   - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-feed
 sass:
   sass_dir: _sass
   style: compressed
@@ -89,7 +56,7 @@ kramdown:
   footnote_nr: 1
   entity_output: as_char
   toc_levels: 1..6
-  enable_coderay: true
+  use_coderay: true
 
   coderay:
     coderay_line_numbers: nil

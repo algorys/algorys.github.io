@@ -1,10 +1,10 @@
 ---
 layout: page
-title: A propos
+title: About the Jekyll Theme
 image:
-  feature:
-  credit:
-  creditlink: 
+  feature: abstract-5.jpg
+  credit: dargadgetz
+  creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 comments: false
 modified: 2014-12-24
 ---
@@ -29,3 +29,5 @@ Ce blog est destiné avant tout aux intégrateurs et administrateurs qui cherche
  * [Prosody](https://prosody.im/) pour la messagerie instantanée.
 
 Et évidemment aussi sur pas mal d'outils annexes.
+
+<div markdown="0"><a href="{{ site.url }}/theme-setup/" class="btn btn-info">Theme Setup</a> <a href="https://github.com/mmistakes/hpstr-jekyll-theme" class="btn btn-success">Download HPSTR</a></div>
