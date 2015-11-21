@@ -14,17 +14,17 @@ share:
 date: 2015-11-21T22:05:05+01:00
 ---
 
-# Dokuwiki : le serveur
+# Installation du serveur
 
 ## Pourquoi Dokuwiki ?
 
 Qu'est-ce qu'un wiki ? Si vous ne connaissez pas ce genre d'outil, rendez-vous sur [Wikipédia : Wiki](https://fr.wikipedia.org/wiki/Wiki) pour en apprendre un peu plus. 
 
-L'intérêt d'un tel site, c'est qu'il vous permet d'établir une documentation interne complète, que ce soit pour votre entreprise ou toute autre organisation. 
-
 Dokuwiki est simple à installer et à utiliser. De plus il est possible de faire beaucoup de choses avec [Dokuwiki](https://www.dokuwiki.org/) car le développement de vos propres plugins est très facile.
 
 ## A savoir
+L'intérêt d'un tel site, c'est qu'il vous permet d'établir une documentation interne complète, que ce soit pour votre entreprise ou toute autre organisation. 
+
 Ce tutoriel est normalement compatible avec n'importe quel debian-like (Debian, Ubuntu, Mint...). Les commandes devront donc être adaptées si vous utilisez d'autres distributions Linux.
 
 ## Prérequis
@@ -83,12 +83,14 @@ sudo vi /etc/apache2/sites-available/monwiki.conf
 Et renseigner le selon votre configuration :
 
 {% highlight apacheconf %}
-<virtualHost *:80>
+<VirtualHost *:80>
     # Détails du serveur
     ServerName monwiki.domaine.com
     ServerAlias monalias
     
     ServerAdmin admin@mail.com
+
+    # Options
     DocumentRoot /var/www/monwiki
     <Directory /var/www/monwiki>
     Options Indexes FollowSymLinks MultiViews
@@ -96,9 +98,11 @@ Et renseigner le selon votre configuration :
       allow from all
     </Directory>
 
+    # Logs
     ErrorLog ${APACHE_LOG_DIR}/wiki_error.log
     CustomLog ${APACHE_LOG_DIR}/wiki_access.log combined
 
+</VirtualHost>
 {% endhighlight %}
 
 Rechargez votre serveur web :
@@ -115,3 +119,4 @@ http://ip_serveur/mowiki/install.php
 
 Vous devriez voir la page d'installation de Dokuwiki.
 
+Si vous ne voyez rien ou que vous avez une page d'erreur, relisez ce tutoriel. Sinon vérifiez les logs d'Apache.
