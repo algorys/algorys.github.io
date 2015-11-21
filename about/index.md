@@ -26,9 +26,9 @@ Ce blog est destiné avant tout aux intégrateurs et aux administrateurs qui che
 Tutoriels (en cours ou à faire) :
 
  * [Gitlab](https://gitlab.com) pour la gestion et le versionnement des sources.
- * [Doxygen](www.doxygen.org/) pour la documentation du code.
+ * [Doxygen](http://www.doxygen.org/) pour la documentation du code.
  * [Jenkins](https://jenkins-ci.org) pour l'automatisation.
- * [Redmine](www.redmine.org/) pour la gestion des projets.
+ * [Redmine](http://www.redmine.org/) pour la gestion des projets.
  * [Dokuwiki](https://www.dokuwiki.org/) pour la documentation en général.
  * [Prosody](https://prosody.im/) pour la messagerie instantanée.
 
