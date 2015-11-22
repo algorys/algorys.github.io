@@ -60,8 +60,9 @@ wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
 
 Décompressez l'archive téléchargée et renommez la :
 {% highlight bash %}
-tar -xzvf dokuwiki/dokuwiki-stable.tgz
-mv dokuwiki-DATE-VERSION monwiki
+sudo tar -xzvf dokuwiki-stable.tgz
+sudo mv dokuwiki-DATE-VERSION monwiki
+sudo rm dokuwiki-stable.tgz
 {% endhighlight %}
 
 Donnez les droits à votre utilisateur (www-data pour Apache) :
@@ -73,7 +74,7 @@ Voilà le dossier de votre serveur est prêt.
 
 ## Serveur web
 
-Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça. Pour cela rajoutez un fichier de configuration pour votre Wiki dans le dssier de votre serveur web.
+Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça. Pour cela rajoutez un fichier de configuration pour votre Wiki dans le dossier de votre serveur web.
 
 {% highlight bash %}
 sudo vi /etc/apache2/sites-available/monwiki.conf
