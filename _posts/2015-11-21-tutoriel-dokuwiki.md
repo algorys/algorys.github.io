@@ -3,8 +3,8 @@ layout: post
 title: Dokuwiki (1ère partie)
 modified:
 categories: [Tuto]
-description: Comment installer Dokuwiki
-tags: [turoriel, dokuwiki]
+description: tutoriel Dokuwiki serveur debian
+tags: [turoriel, dokuwiki, wiki]
 image:
   feature:
   credit:
