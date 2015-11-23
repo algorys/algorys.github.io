@@ -18,12 +18,12 @@ date: 2015-11-21T22:05:05+01:00
 
 ## Pourquoi Dokuwiki ?
 
-Qu'est-ce qu'un wiki ? Si vous ne connaissez pas ce genre d'outil, rendez-vous sur [Wikipédia : Wiki](https://fr.wikipedia.org/wiki/Wiki) pour en apprendre un peu plus. 
+Si vous ne connaissez pas ce genre d'outil, rendez-vous sur [Wikipédia : Wiki](https://fr.wikipedia.org/wiki/Wiki) pour en apprendre un peu plus. 
 
-Dokuwiki est simple à installer et à utiliser. De plus il est possible de faire beaucoup de choses avec [Dokuwiki](https://www.dokuwiki.org/) car le développement de vos propres plugins est très facile.
+[Dokuwiki](https://www.dokuwiki.org/) est simple à installer et à utiliser. De plus il est possible de faire beaucoup de choses avec, car le développement de vos propres plugins est assez facile pour peu que vous ayez quelques notions de programmation.
 
 ## A savoir
-L'intérêt d'un tel site, c'est qu'il vous permet d'établir une documentation interne complète, que ce soit pour votre entreprise ou toute autre organisation. 
+L'intérêt d'un tel site, c'est qu'il vous permet d'établir une documentation interne complète, que ce soit pour votre entreprise ou toute autre organisation, jeu, univers, etc... 
 
 Ce tutoriel est normalement compatible avec n'importe quel debian-like (Debian, Ubuntu, Mint...). Les commandes devront donc être adaptées si vous utilisez d'autres distributions Linux.
 
@@ -43,19 +43,18 @@ C'est tout.
 
 ## Installation des sources
 
-Sur certaines distributions, il est tout à fait possible d'installer Dokuwiki en une seule commande :
-{% highlight bash %}
-sudo apt-get install dokuwiki
-{% endhighlight %}
+Sur certaines distributions, il est tout à fait possible d'installer Dokuwiki en une seule commande : *sudo apt-get install dokuwiki et suivez le tutoriel de votre distribution*.
 
-Mais je vous déconseille de faire ça. Autant installer votre serveur là ou vous voulez et l'installation par paquet installe dans plusieurs dossier. Autant tout centraliser pour faciliter les futures mises à jour.
+>**Cependant, je vous déconseille de faire ça.** 
 
-Rendez-vous sur la [page de téléchargement](http://download.dokuwiki.org/) de Dokuwiki et copiez le lien de la version "Stable". 
+L'installation par paquet installe dans plusieurs dossier. Pour Dokuwiki autant tout mettre dans le même dossier pour faciliter les futures mises à jour. Vous allez voir c'est très simple et autant installer votre serveur là ou vous voulez ! 
 
-Ouvrez un terminal et collez le lien copié :
+Sinon, rendez-vous sur la [page de téléchargement](http://download.dokuwiki.org/) de Dokuwiki et copiez le lien de la version "Stable". 
+
+>Ouvrez un terminal et collez le lien copié :
 {% highlight bash %}
 cd /var/www/
-wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+sudo wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
 {% endhighlight %}
 
 Décompressez l'archive téléchargée et renommez la :
@@ -74,11 +73,12 @@ Voilà le dossier de votre serveur est prêt.
 
 ## Serveur web
 
-Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça. Pour cela rajoutez un fichier de configuration pour votre Wiki dans le dossier de votre serveur web.
+Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça. 
+
+>Rajoutez un fichier de configuration pour votre Wiki dans le dossier de votre serveur web.
 
 {% highlight bash %}
 sudo vi /etc/apache2/sites-available/monwiki.conf
-// Le dossier pour nginx est sensiblement identique
 {% endhighlight %}
 
 Et renseigner le selon votre configuration :
@@ -106,16 +106,17 @@ Et renseigner le selon votre configuration :
 </VirtualHost>
 {% endhighlight %}
 
-Rechargez votre serveur web :
+>Rechargez votre serveur web :
 
 {% highlight apacheconf %}
+sudo a2ensite monwiki.conf
 sudo service apache2 reload
 {% endhighlight %}
 
 Ouvrez votre explorateur et entrez l'adresse suivante en remplaçant "ip_serveur" par votre ip :
 
 {% highlight php %}
-http://ip_serveur/mowiki/install.php
+http://ip_serveur/install.php
 {% endhighlight %}
 
 Vous devriez voir la page d'installation de Dokuwiki.
