@@ -66,7 +66,7 @@ sudo rm dokuwiki-stable.tgz
 
 Donnez les droits à votre utilisateur (www-data pour Apache) :
 {% highlight bash %}
-sudo chown -R www-data:www-data /var/www/monwiki
+sudo chown -R www-data:www-data data conf
 {% endhighlight %}
 
 Voilà le dossier de votre serveur est prêt.
