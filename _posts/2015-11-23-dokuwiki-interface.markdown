@@ -21,6 +21,7 @@ date: 2015-11-23T22:05:05+01:00
 Maintenant que vous avez un serveur opérationnel, vous devez le personnaliser.
 
 Remplissez les différents champs :
+
  * Donnez un nom à votre wiki.
  * Choisissez un utilisateur root et un mot de passe (ce sera le login de l'administrateur du wiki, mais vous pourrez en rajouter d'autre par la suite)
  * Faites un choix entre les différentes politiques du wiki.
