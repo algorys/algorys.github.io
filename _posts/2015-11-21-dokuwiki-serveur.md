@@ -31,13 +31,13 @@ Ce tutoriel est normalement compatible avec n'importe quel debian-like (Debian, 
 
  * Une distribution Linux
  * Un serveur Web : [Apache](http://www.apache.org/httpd) ou [nginx](http://nginx.org/) par exemple.
-{% highlight bash %}
+```bash
 sudo apt-get install apache2
-{% endhighlight %}
+```
  * Vous devez avoir Php d'installé :
-{% highlight bash %}
+```bash
 sudo apt-get install php5
-{% endhighlight %}
+```
 
 C'est tout.
 
@@ -52,22 +52,22 @@ L'installation par paquet installe dans plusieurs dossier. Pour Dokuwiki autant 
 Sinon, rendez-vous sur la [page de téléchargement](http://download.dokuwiki.org/) de Dokuwiki et copiez le lien de la version "Stable". 
 
 >Ouvrez un terminal et collez le lien copié :
-{% highlight bash %}
+```bash
 cd /var/www/
 sudo wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
-{% endhighlight %}
+```
 
 Décompressez l'archive téléchargée et renommez la :
-{% highlight bash %}
+```bash
 sudo tar -xzvf dokuwiki-stable.tgz
 sudo mv dokuwiki-DATE-VERSION monwiki
 sudo rm dokuwiki-stable.tgz
-{% endhighlight %}
+```
 
 Donnez les droits à votre utilisateur (www-data pour Apache) :
-{% highlight bash %}
+```bash
 sudo chown -R www-data:www-data data conf
-{% endhighlight %}
+```
 
 Voilà le dossier de votre serveur est prêt.
 
@@ -77,13 +77,13 @@ Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça.
 
 >Rajoutez un fichier de configuration pour votre Wiki dans le dossier de votre serveur web.
 
-{% highlight bash %}
+```bash
 sudo vi /etc/apache2/sites-available/monwiki.conf
-{% endhighlight %}
+```
 
 Et renseigner le selon votre configuration :
 
-{% highlight apacheconf %}
+```apache
 <VirtualHost *:80>
     # Détails du serveur
     ServerName monwiki.domaine.com
@@ -104,20 +104,20 @@ Et renseigner le selon votre configuration :
     CustomLog ${APACHE_LOG_DIR}/wiki_access.log combined
 
 </VirtualHost>
-{% endhighlight %}
+```
 
 >Rechargez votre serveur web :
 
-{% highlight apacheconf %}
+```apache
 sudo a2ensite monwiki.conf
 sudo service apache2 reload
-{% endhighlight %}
+```
 
 Ouvrez votre explorateur et entrez l'adresse suivante en remplaçant "ip_serveur" par votre ip :
 
-{% highlight php %}
+```php
 http://ip_serveur/install.php
-{% endhighlight %}
+```
 
 Vous devriez voir la page d'installation de Dokuwiki.
 
