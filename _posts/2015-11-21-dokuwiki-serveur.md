@@ -31,10 +31,12 @@ Ce tutoriel est normalement compatible avec n'importe quel debian-like (Debian, 
 
  * Une distribution Linux
  * Un serveur Web : [Apache](http://www.apache.org/httpd) ou [nginx](http://nginx.org/) par exemple.
+
 ```bash
 sudo apt-get install apache2
 ```
  * Vous devez avoir Php d'installé :
+
 ```bash
 sudo apt-get install php5
 ```
@@ -52,12 +54,14 @@ L'installation par paquet installe dans plusieurs dossier. Pour Dokuwiki autant 
 Sinon, rendez-vous sur la [page de téléchargement](http://download.dokuwiki.org/) de Dokuwiki et copiez le lien de la version "Stable". 
 
 >Ouvrez un terminal et collez le lien copié :
+
 ```bash
 cd /var/www/
 sudo wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
 ```
 
 Décompressez l'archive téléchargée et renommez la :
+
 ```bash
 sudo tar -xzvf dokuwiki-stable.tgz
 sudo mv dokuwiki-DATE-VERSION monwiki
@@ -65,6 +69,7 @@ sudo rm dokuwiki-stable.tgz
 ```
 
 Donnez les droits à votre utilisateur (www-data pour Apache) :
+
 ```bash
 sudo chown -R www-data:www-data data conf
 ```
