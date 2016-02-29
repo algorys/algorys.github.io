@@ -37,9 +37,8 @@ bing_verify:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Europe/Paris
 future:      true
-#highlighter: pygments
-#markdown:    kramdown
-markdown:    redcarpet
+highlighter: true
+markdown:    kramdown
 gems:
   - jekyll-sitemap
   - jekyll-paginate
