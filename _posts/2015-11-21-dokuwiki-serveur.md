@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Dokuwiki (1ère partie)
+title: Installer Dokuwiki
 modified:
 categories: [Tuto]
 description: tutoriel Dokuwiki serveur debian
-tags: [turoriel, dokuwiki, wiki]
+tags: [tutoriel, dokuwiki, wiki]
 image:
   feature:
   credit:
@@ -14,7 +14,7 @@ share:
 date: 2015-11-21T22:05:05+01:00
 ---
 
-# Installation du serveur
+# Introduction
 
 ## Pourquoi Dokuwiki ?
 
@@ -35,6 +35,7 @@ Ce tutoriel est normalement compatible avec n'importe quel debian-like (Debian, 
 ```bash
 sudo apt-get install apache2
 ```
+
  * Vous devez avoir Php d'installé :
 
 ```bash
@@ -43,17 +44,17 @@ sudo apt-get install php5
 
 C'est tout.
 
-## Installation des sources
+# Téléchargement et installation
 
-Sur certaines distributions, il est tout à fait possible d'installer Dokuwiki en une seule commande : *sudo apt-get install dokuwiki et suivez le tutoriel de votre distribution*.
+Sur certaines distributions, il est tout à fait possible d'installer Dokuwiki en une seule commande (`sudo apt-get install dokuwiki`).
 
->**Cependant, je vous déconseille de faire ça.** 
+> **Cependant, je vous déconseille de faire ça.** 
 
-L'installation par paquet installe dans plusieurs dossier. Pour Dokuwiki autant tout mettre dans le même dossier pour faciliter les futures mises à jour. Vous allez voir c'est très simple et autant installer votre serveur là ou vous voulez ! 
+L'installation par paquet installe Dokuwiki dans plusieurs dossiers, ce qui n'est pas forcément le meilleur choix. Autant tout mettre dans le même dossier pour faciliter les futures mises à jour. Vous allez voir c'est très simple et tant qu'à faire, autant installer votre serveur là ou vous voulez ! 
 
-Sinon, rendez-vous sur la [page de téléchargement](http://download.dokuwiki.org/) de Dokuwiki et copiez le lien de la version "Stable". 
+Rendez-vous sur la [page de téléchargement](http://download.dokuwiki.org/) de Dokuwiki et copiez le lien de la version "Stable". 
 
->Ouvrez un terminal et collez le lien copié :
+> Ouvrez un terminal et collez le lien copié :
 
 ```bash
 cd /var/www/
@@ -76,17 +77,19 @@ sudo chown -R www-data:www-data data conf
 
 Voilà le dossier de votre serveur est prêt.
 
-## Serveur web
+# Configurer Apache
 
-Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça. 
+Il va falloir maintenant aller dire à Apache de nous faire tourner tout ça. Si Apache n'est pas installé, installer le maintenant (`sudo apt-get install apache2`).
 
->Rajoutez un fichier de configuration pour votre Wiki dans le dossier de votre serveur web.
+> Rajoutez un fichier de configuration pour votre Wiki dans le dossier de votre serveur web.
 
 ```bash
 sudo vi /etc/apache2/sites-available/monwiki.conf
 ```
 
-Et renseigner le selon votre configuration :
+> **Note :** il est possible qu'Apache n'accepte pas les fichiers avec une extension `.conf` et produise donc une erreur lors du rechargement ou du démarrage d'Apache. Enlevez simplement l'extension, cela devrait résoudre le problème.
+
+Renseignez ensuite votre configuration :
 
 ```conf
 <VirtualHost *:80>
@@ -111,7 +114,7 @@ Et renseigner le selon votre configuration :
 </VirtualHost>
 ```
 
->Rechargez votre serveur web :
+> Activer le site et rechargez votre serveur web :
 
 ```conf
 sudo a2ensite monwiki.conf
@@ -127,3 +130,22 @@ http://ip_serveur/install.php
 Vous devriez voir la page d'installation de Dokuwiki.
 
 Si vous ne voyez rien ou que vous avez une page d'erreur, relisez ce tutoriel. Sinon vérifiez les logs d'Apache.
+
+## Arrivée sur l'interface
+
+Maintenant que vous avez un serveur opérationnel, vous devez le personnaliser.
+
+Remplissez les différents champs :
+
+ * Donnez un nom à votre wiki.
+ * Choisissez un utilisateur root et un mot de passe (ce sera le login de l'administrateur du wiki, mais vous pourrez en rajouter d'autre par la suite)
+ * Faites un choix entre les différentes politiques du wiki.
+
+Et cliquez sur **Save**.
+
+Si tout se passe bien, vous devriez arriver sur la page d'accueil de votre wiki. Vous pouvez vous connecter avec le compte root que vous avez précédement créé.
+
+# Conclusion
+
+Monter un wiki avec Dokuwiki est d'une extrême simplicité. De plus il existe de nombreux [plugins](https://www.dokuwiki.org/plugins) et de nombreux [thèmes](https://www.dokuwiki.org/template) pour le personnaliser.
+
