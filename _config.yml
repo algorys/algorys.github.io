@@ -17,7 +17,7 @@ owner:
   twitter: agshmne        
   #facebook:       
   github: algorys        
-  #stackexchange:  
+  stackexchange: http://stackoverflow.com/users/4303902/algorys
   #linkedin:       
   #instagram:      
   #flickr:         
@@ -37,7 +37,7 @@ bing_verify:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Europe/Paris
 future:      true
-highlighter: true
+highlighter: rouge
 markdown:    kramdown
 gems:
   - jekyll-sitemap

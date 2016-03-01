@@ -88,7 +88,7 @@ sudo vi /etc/apache2/sites-available/monwiki.conf
 
 Et renseigner le selon votre configuration :
 
-```apache
+```conf
 <VirtualHost *:80>
     # Détails du serveur
     ServerName monwiki.domaine.com
@@ -113,7 +113,7 @@ Et renseigner le selon votre configuration :
 
 >Rechargez votre serveur web :
 
-```apache
+```conf
 sudo a2ensite monwiki.conf
 sudo service apache2 reload
 ```
