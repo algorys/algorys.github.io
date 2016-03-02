@@ -1,0 +1,453 @@
+---
+layout: post
+title: Installer Redmine 3.0
+modified:
+categories: [Tuto]
+description: comment installer redmine
+tags: [tutoriel, redmine]
+image:
+  feature:
+  credit:
+  creditlink:
+comments:
+share:
+date: 2016-03-02T12:00:05+01:00
+---
+
+# Introduction
+
+Dans beaucoup d'entreprise, il y a toujours plusieurs projets qui demande un suivi, une gestion de ticket, de documents, etc... Certains logiciels payant font très bien ce travail mais ont quand même un certain coût. Pour pallier à cela, il exsite des gestionnaires de projet Open Source, dont notamment [Redmine](http://www.redmine.org/).
+
+Redmine est une véritable usine à gaz, permettant de réaliser beaucoup de choses. Il a l'avantage de pouvoir discuter avec beaucoup d'autres serveurs (comme Gitlab ou Jenkins) et d'être de base déjà très complet. Des plugins sont aussi disponibles et il est possibles d'en créer soi-même.
+
+# Prérequis du Tutoriel
+
+Nous allons donc voir comment installer Redmine dans sa dernière version stable (actuellement 3.2). De l'installation du serveur de base jusqu'à un serveur de production, avec son serveur Web et son service.
+
+Pour cela il va falloir vous assurez d'avoir les prérequis suivants :
+
+* Une machine Ubuntu (ou Debian-like) avec un accès **root**
+* Le programme curl d'installé (`sudo apt-get install curl`)
+
+# Prérequis de Redmine
+
+Redmine a besoin de pas mal de chose d'installées pour pouvoir fonctionner. Il utilise Ruby et MySQL (ou une autre base de données), ainsi que les programmes Gem, Bundler et d'autres dépendances. Il est important de consulter les [prérequis de Redmine](http://www.redmine.org/projects/redmine/wiki/RedmineInstall#Requirements) avant de se lancer dans une installation.
+
+A ce jour (Mars 2016), voici ce que préconnise la documentation :
+
+| Version de Redmine | Versions de Ruby supportées    | Version de Rails utilisée |
+|:------------------:|:------------------------------:|:-------------------------:|
+| Version en cours   | ruby 1.9.3, 2.0.0, 2.1, 2.2 | Rails 4.2                 |
+| Redmine 3.0        | ruby 1.9.3, 2.0.0, 2.1, 2.2 | Rails 4.2                 |
+| Redmine 2.6        | ruby 1.8.7, 1.9.2, 1.9.3, <br>2.0.0, 2.1, 2.2, jruby-1.7.6 | Rails 3.2 |
+
+Base de Données Supportées : MySQL 5.0 ou plus, PostgreSQL 8.2 ou plus, Microsoft SQL Server 2008 (Redmine 2.X) ou 2012 (Redmine 3.X) et _SQLite 3_.
+
+Comme vous pouvez le voir, Redmine supporte pas mal de version de Ruby différentes, ce qui est pratique sans l'être. Ruby et Rails sont assez sensibles dès qu'on mélange plusieurs versions ou leurs librairies.
+
+Dans ce tutoriel, nous allons donc utiliser Ruby 2.1 et MySQL pour installer Redmine en 3.2.
+
+## Créer un utilisateur dédié
+
+Pour des raisons de bonnes pratiques, il est toujours mieux de créer un utilisateur qui va s'occuper du service créé. Personnellement j'ai créé un utilisateur qui se nomme `redmine` mais ce n'est pas une obligation.
+
+J'ai aussi choisi de mettre son _HOME_ dans un répertoire différent de celui de base (`/home/`) mais ce n'est pas obligatoire non plus.
+
+```bash
+sudo mkdir /usr/local/home
+sudo useradd -s /bin/bash -m -d /usr/local/home -g root redmine
+```
+
+Puis connectez vous avec votre utilisateur fraichement créé :
+
+```bash
+sudo su - redmine
+```
+
+Dans la suite de ce tutoriel vous n'aurez normalement pas à rechanger d'utilisateur.
+
+## Installer Ruby
+
+Pour installer Ruby, on pourrait passer par les paquets proposé par votre distribution. Mais celui-ci n'est pas forcément à jour et ne proposera pas de Ruby assez monté en version pour installer Redmine 3.X. Je vous conseille donc de passer par [RVM](https://rvm.io/).
+
+L'avantage avec RVM, c'est qu'il vous permet de gérer facilement vos versions de Ruby et surtout de pouvoir les mettre à jour si besoin en peu de temps.
+
+Pour installer RVM, tapez la commande suivante (en tant qu'**utilisateur redmine** !) :
+
+```
+gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+\curl -sSL https://get.rvm.io | bash -s stable
+```
+
+> **Note :** Il est possible que l'obtention de RVM diffère sur Debian ou sur d'autres distribution. Pour Ubuntu j'ai du forcer le port 80 et pointer sur `keyserver.ubuntu`. La documentation officielle préconise cette commande : `gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C`.
+
+Normalement si tout se passe bien, vous devriez avoir la sortie suivante :
+
+```
+Downloading https://github.com/rvm/rvm/archive/1.26.11.tar.gz
+Downloading https://github.com/rvm/rvm/releases/download/1.26.11/1.26.11.tar.gz.asc
+gpg: Signature faite le lun. 30 mars 2015 23:52:13 CEST avec la clef RSA d'identifiant BF04FF17
+gpg: Bonne signature de « Michal Papis (RVM signing) <mpapis@gmail.com> »
+gpg: Attention : cette clef n'est pas certifiée avec une signature de confiance.
+gpg:          Rien n'indique que la signature appartient à son propriétaire.
+Empreinte de clef principale : 409B 6B17 96C2 7546 2A17  0311 3804 BB82 D39D C0E3
+     Empreinte de la sous-clef : 62C9 E5F4 DA30 0D94 AC36  166B E206 C29F BF04 FF17
+GPG verified '/usr/local/home/redmine/.rvm/archives/rvm-1.26.11.tgz'
+
+Installing RVM to /usr/local/home/redmine/.rvm/
+    Adding rvm PATH line to /usr/local/home/redmine/.profile /usr/local/home/redmine/.mkshrc /usr/local/home/redmine/.bashrc /usr/local/home/redmine/.zshrc.
+    Adding rvm loading line to /usr/local/home/redmine/.profile /usr/local/home/redmine/.bash_profile /usr/local/home/redmine/.zlogin.
+Installation of RVM in /usr/local/home/redmine/.rvm/ is almost complete:
+
+  * To start using RVM you need to run `source /usr/local/home/redmine/.rvm/scripts/rvm`
+    in all your open shell windows, in rare cases you need to reopen all shell windows.
+
+# redmine,
+#
+#   Thank you for using RVM!
+#   We sincerely hope that RVM helps to make your life easier and more enjoyable!!!
+#
+# ~Wayne, Michal & team.
+
+In case of problems: http://rvm.io/help and https://twitter.com/rvm_io
+```
+
+Voilà rvm est installé. Comme dit dans l'installation, pour commencer à l'utiliser vous devez taper la commande suivante :
+
+```bash
+source /usr/local/home/redmine/.rvm/scripts/rvm
+```
+
+Maintenant que vous avez rvm d'installé, vous pouvez voir les versions de Ruby disponibles en tapant `rvm list known`. Iil ne reste plus qu'ensuite à lui indiquer quel version de ruby vous souhaitez installer.
+
+```bash
+rvm install 2.1.5
+```
+Le programme vous demandera le mot de passe `root` pour pouvoir continuer l'installation et installera tout seul les dépendances requises (gcc, g++, maken zlib, etc...). Si tout se passe correctement, vous devriez avoir un ruby d'installé. Vous pouvez vérifier en tapant `ruby --version`.
+
+## Installer MySQL
+
+Pour installer MySQL, c'est beaucoup plus simple évidemment. Une simple installation par les dépôts est nécessaire, ainsi qu'une librairie en plus pour l'adaptateur `mysql2`.
+
+```bash
+sudo apt-get update
+sudo apt-get install mysql-server libmysqlclient-dev
+```
+
+Vous devrez certainement créer un mot de passe pour le compte `root` de MySQL. Retenez le bien afin de pouvoir y accéder par la suite.
+
+Félicitations ! Vous avez maintenant tous les prérequis nécessaires pour pouvoir installer Redmine.
+
+# Installation de Redmine
+
+Maintenant que vous avez fait le plus gros du boulot, il vous reste plus qu'à télécharger l'archive qui vous intéresse. 
+
+## Téléchargement de l'archive
+
+Pour cela, rendez-vous sur la page des dernières [versions stables de Redmine](http://www.redmine.org/projects/redmine/wiki/Download#Stable-releases) et télécharger le lien qui vous intéresse. Décompressez l'archive dans votre _HOME_ et renommez le dossier `redmine-X.X.X` en `redmine`.
+
+Dans cet exemple :
+
+```bash
+cd ~; wget http://www.redmine.org/releases/redmine-3.2.0.tar.gz
+tar -xzvf redmine-3.2.0.tar.gz
+mv redmine-3.2.0 redmine
+```
+
+## Configurer la Base SQL
+
+Pour que Redmine puisse ranger toutes ses informations, il lui faut une base de données. 
+
+### Configurer SQL
+
+Connectez vous à SQL avec votre compte `root` et tapez les lignes suivantes (en remplaçant `your_password` par un mot de passe sécurisé) :
+
+```sql
+mysql> CREATE DATABASE redmine CHARACTER SET utf8;
+mysql> CREATE USER 'redmine'@'localhost' IDENTIFIED BY 'your_password';
+mysql> GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost';
+```
+
+Vous pouvez ensuite quitter MySQL en tapant `CTRL-D` ou `exit`.
+
+> **Note :** encore une fois l'utilisateur SQL et la base portent le nom _redmine_ mais ce n'est pas obligatoire. Libre à vous de les appeler comme vous voulez, tant que vous vous y retrouver et que vous appliquez ensuite les modifications dans la suite des configurations.
+
+### Configurer SQL pour Redmine
+
+Redmine fonctionne avec des fichiers de configuration portant l'extention `.yml`. Et ses créateurs sont sympas, ils vous ont mis des exemples partout. Ce qui nous intéresse maintenant c'est de dire à Redmine sur quelle Base de Données il doit travailler.
+
+Pour cela, rendez-vous dans le dossier redmine et copiez le fichier `conf/database.yml.example` :
+
+```bash
+cd ~/redmine
+cp config/database.yml.example config/database.yml
+```
+
+Ouvrez le fichier copié (`vi config/databse.yml`) et éditez le en fonction de votre configuration. Dans notre exemple, cela devrait ressembler à ça :
+
+```conf
+# Des exemples pour PostgreSQL, SQLite3 et SQL Server peuvent être trouvés à la fin du fichier.
+# L'indentation des lignes doivent être de 2 espaces (pas de tabulations).
+
+production:
+  adapter: mysql2           # l'adaptateur utilisé
+  database: redmine         # le nom de votre Base
+  host: localhost           # le nom d'hôte de l'utilisateur
+  username: redmine         # le nom d'utilisateur SQL
+  password: "your_password" # le mot de passe de l'utilisateur
+  encoding: utf8            # l'encodage définie pour la Base
+```
+
+Personnellement j'ai effacé les autres configurations qui ne m'était pas utiles.
+
+## Installer les dépendances
+
+Maintenant Redmine va avoir besoin de Bundler pour fonctionner et gérer les dépendances de ses Gems. Pour installer Bundler :
+
+```bash
+cd ~/redmine
+gem install bundler
+```
+
+Ensuite, grâce à Bundler vous allez pouvoir installer les Gems pour que Redmine puisse fonctionner :
+
+```bash
+bundle install --without development test rmagick
+```
+
+Si tout se passe bien, vous devriez voir plusieurs lignes d'installation (des différentes gems) et surtout :
+
+```bash
+Bundle complete! XX Gemfile dependencies, XX gems now installed.
+Gems in the groups development, test and rmagick were not installed.
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+```
+
+> **Note :** comme vous avez pu le voir, nous avons dis à Bundler de ne pas installer de gems pour RMagick. Cette gem est optionnelle et sert à utiliser ImageMagick pour manipuler des PDF et des PNG pour l'export de données. Si vous souhaitez quand même l'installer, assurez-vous d'avoir les dépendances requises avant de lancer `bundle install`. Pour Ubuntu, vous devrez lancer `sudo apt-get install imagemagick libmagickwand-dev` pour pouvoir ensuite installer cette gem.
+
+## Générer une clé de codage
+
+Cette étape va permettre à Rails d'avoir une clé pour encoder les cookies de vos sessions. Pour générer cette clé tapez la commande suivante :
+
+```bash
+bundle exec rake generate_secret_token
+```
+
+## Création du Schéma de la Base
+
+Redmine va avoir ensuite besoin d'une structure pour sa base de données pour pouvoir fonctionner. Elle doit correspondre à votre environnement, ici l'environnement est _production_.
+
+```
+RAILS_ENV=production bundle exec rake db:migrate
+```
+
+Vous allez avoir pas mal de ligne d'exécution qui vont défiler :
+
+```bash
+== 1 Setup: migrating =========================================================
+-- create_table("attachments", {:force=>true})
+   -> 0.0031s
+-- create_table("auth_sources", {:force=>true})
+   -> 0.0025s
+...
+== 20151024082034 AddTokensUpdatedOn: migrating ===============================
+-- add_column(:tokens, :updated_on, :timestamp)
+   -> 0.0020s
+== 20151024082034 AddTokensUpdatedOn: migrated (0.0028s) ======================
+
+== 20151025072118 CreateCustomFieldEnumerations: migrating ====================
+-- create_table(:custom_field_enumerations)
+   -> 0.0014s
+== 20151025072118 CreateCustomFieldEnumerations: migrated (0.0018s) ===========
+
+== 20151031095005 AddProjectsDefaultVersionId: migrating ======================
+-- column_exists?(:projects, :default_version_id, :integer)
+   -> 0.0009s
+-- add_column(:projects, :default_version_id, :integer, {:default=>nil})
+   -> 0.0024s
+== 20151031095005 AddProjectsDefaultVersionId: migrated (0.0042s) =============
+```
+
+Vous devrez ensuite insérer les données par défaut (comme le language) dans votre Base :
+
+```bash
+RAILS_ENV=production REDMINE_LANG=fr bundle exec rake redmine:load_default_data
+```
+
+Cela devrait afficher la sortie suivante :
+
+```bash
+Default configuration data loaded.
+```
+
+## Permissions et Fichiers
+
+Vous devrez ensuite faire en sorte que tout soit accessible et créer les dossiers manquants le cas échéant :
+
+```bash
+mkdir -p tmp tmp/pdf public/plugin_assets
+chmod -R 755 files log tmp public/plugin_assets
+```
+Si vous n'avez pas créé votre dossier redmine dans le Home de l'utilisateur ou que vous avez des permissions différentes, il faudra quand même vous assurez que l'utilisateur ai les droits sur les dossiers suivants : `files`, `log`, `tmp` et `public/plugin_assets` (Par exemple : `sudo chown -R redmine:redmine files log tmp public/plugin_assets`).
+
+Félicitations ! Vous avez enfin une installation qui est prête !
+
+# Tester l'installation
+
+Pour tester votre serveur Redmine, il vous faudra exécuter la commande suivante dans le dossier de celui-ci :
+
+```bash
+bundle exec rails server webrick -e production
+```
+
+Et faire pointer le navigateur du serveur sur l'adresse suivante : [http://localhost:3000/](http://localhost:3000/) ou bien télécharger l'index de cette adresse (`wget http://localhost:3000/`).
+
+> **Astuce :** si vous avez fait ce tutoriel sur une machine virtuelle ou tout du moins distante et que vous n'avez pas de navigateur, vous pouvez faire en sorte que le localhost du serveur devienne le votre. Pour réussir ce tour de magie, il faut monter un tunnel SSH entre votre PC et le Serveur avec une redirection de port (ici le port est 3000). Voici un exemple : `ssh -L 3000:127.0.0.1:3000 login@ip_serveur`. Pointez ensuite sur l'adresse _http://localhost:3000_ avec votre navigateur et vous devriez arriver sur l'interface de Redmine !
+
+Pour pouvoir se logger, il suffit d'utiliser les identifiants suivants :
+
+* Login : admin
+* Mot de Passe : admin
+
+Je vous conseille bien évidemment de les changer par la suite.
+
+Vous pouvez à tout moment arrêter le serveur en tapant `CTRL-C`.
+
+# Créer le Service Redmine
+
+Maintenant vous avez un serveur Redmine opérationnel. Mias par contre il n'est accessible que sur la boucle locale du serveur (localhost) et implique d'aller sur le port 3000. Tout cela n'est pas très joli. Nous allons donc créer un service à l'aide la gem _unicorn_. 
+
+## Installer Unicorn
+
+Pour pouvoir l'utiliser, nous devons d'abord l'installer. Ne touchez pas au Gemfile de Redmine et utilisez plutôt le fichier `Gemfile.local` dédié à ce genre de manipulation. Ajoutez la gem unicorn (`vi Gemfile.local`) à ce fichier :
+
+```conf
+gem 'unicorn'
+```
+
+Puis relancer Bundler afin d'installer la nouvelle gem :
+
+```bash
+bundle install --without development test rmagick
+```
+
+Vous devriez voir l'installation de nouvelles gems.
+
+## Configuration pour Unicorn
+
+Unicorn va maintenant avoir besoin d'un fichier de configuration nommé `unicorn.rb`. Nous allons placer ce fichier dans le dossier `config` qui s'y prête bien (`vi config/unicorn.rb`) et y ajouter les lignes suivantes :
+
+```ruby
+worker_processes 4
+working_directory "/usr/local/home/redmine/redmine"
+listen "/var/run/redmine/redmine-unicorn.sock", :backlog => 64
+timeout 30
+
+pid "/var/run/redmine/unicorn.pid"
+
+stderr_path "/var/log/redmine/unicorn.stderr.log"
+stdout_path "/var/log/redmine/unicorn.stdout.log"
+```
+
+Créez maintenant les dossier correspondants et donnez les droits requis :
+
+```bash
+sudo mkdir /var/run/redmine
+sudo chown redmine:redmine /var/run/redmine/
+sudo mkdir /var/log/redmine/
+sudo chown redmine:redmine /var/log/redmine/
+touch /var/log/redmine/unicorn.stderr.log
+touch /var/log/redmine/unicorn.stdout.log
+```
+
+Voilà, unicorn a maintenant sa configuration de prête. Pour pouvoir ensuite l'utiliser, il nus faut créer le service associé :
+
+## Service Unicorn-Redmine
+
+Pour créer un service pour redmine, il va falloir le rajouter dans `/etc/init.d/`. Attention à bien vérifier les chemins que vous allez mettre dans ce fichier, une simple erreur dans le chemin d'un fichier de configuration et le service ne marchera pas.
+
+Heureusement il y aura toujours les lods définis à l'étape d'avant pour vous aider à débugger par la suite en cas de problème !
+
+Éditez votre fichier (`sudo vi /etc/init.d/redmine_unicorn`) et ajoutez les lignes suivantes :
+
+```bash
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides: unicorn
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start daemon at boot time
+# Description: Enable service provided by daemon.
+### END INIT INFO
+
+PATH=/usr/local/home/redmine/.rvm/gems/ruby-2.1.5/bin:/usr/local/home/redmine/.rvm/gems/ruby-2.1.5@global/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/home/redmine/.rvm/bin
+BUNDLE=/usr/local/home/redmine/.rvm/gems/ruby-2.1.5/bin/bundle
+UNICORN=/usr/local/home/redmine/.rvm/gems/ruby-2.1.5/bin/unicorn_rails
+KILL=/bin/kill
+APP_ROOT=/usr/local/home/redmine/redmine
+PID=/var/run/redmine/unicorn.pid
+OLD_PID=/var/run/redmine/unicorn.pid.oldbin
+CONF=/usr/local/home/redmine/redmine/config/unicorn.rb
+GEM_HOME=/usr/local/home/redmine/.rvm/gems/ruby-2.1.5
+USER=redmine
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM
+
+sig () {
+  test -s "$PID" && kill -$1 `cat $PID`
+}
+
+case "$1" in
+  start)
+    echo "Starting unicorn rails app ..."
+    su - $USER -c "cd $APP_ROOT; $BUNDLE exec unicorn_rails -D -E production -c $CONF" &&
+    echo "Unicorn rails app started!" ||
+    echo "Unicorn rails app failed"
+    ;;
+  stop)
+    echo "Stoping unicorn rails app ..."
+    sig QUIT && exit 0
+    echo "Not running"
+    ;;
+  restart)
+    if [ -f $PID ];
+    then
+      echo "Unicorn PID $PID exists"
+      /bin/kill -s USR2 `/bin/cat $PID`
+      sleep 30
+      echo "Old PID $OLD_PID"
+      /bin/kill -9 `/bin/cat $OLD_PID`
+    else
+      echo "Unicorn rails app is not running. Lets start it up!"
+      $0 start
+    fi
+    ;;
+  status)
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    ;;
+esac
+```
+
+Si vous avez suivi scrupuleusement tout ce tutoriel, vous n'aurez normalement aucune modifications à faire sur ce fichier. Mais vérifiez quand même vos chemins et votre PATH.
+
+Donnez ensuite les droits sur ce fichier et activez le service au démarrage du serveur :
+
+```bash
+sudo chmod 755 /etc/init.d/redmine-unicorn
+sudo update-rc.d redmine-unicorn defaults
+```
+
+Vous pouvez maintenant démarrer redmine-unicorn :
+
+```bash
+sudo service redmine-unicorn start
+```
+
+Dans le cas d'une erreur, n'hésitez pas à consulter vos logs (`tail -f /var/log/redmine/*`).
+
+
