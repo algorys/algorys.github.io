@@ -134,7 +134,7 @@ Si vous avez observé attentivement les étapes, vous avez pu voir que _ssh-keyg
 
 Maintenant que vous avez une paire de clés, il va falloir allez donner votre clé publique au serveur auquel vous souhaitez vous connecter en SSH.
 
-## Autoriser une clé
+## Autoriser une clé
 
 Pour autoriser une clé sur votre serveur, il faut créer un fichier spécifique dans le dossier .ssh de l'utilisateur concerné sur le serveur. Dans cet exemple j'utilise le même nom d'utilisateur sur le client et sur le serveur. Mais il est tout à fait possible d'utiliser 2 noms différents.
 
