@@ -462,7 +462,7 @@ Si vous avez une erreur, n'hésitez pas à consulter vos logs (`tail -f /var/log
 
 Maintenant nous allons installer et configurer un serveur virtuel pour notre serveur Redmine. Nous utiliserons Nginx comme serveur Web.
 
-## Installation de Nginx
+## Installation de Nginx
 
 Pour installer Nginx, rien de plus simple :
 
