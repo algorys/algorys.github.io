@@ -458,4 +458,89 @@ sudo service redmine-unicorn start
 
 Si vous avez une erreur, n'hésitez pas à consulter vos logs (`tail -f /var/log/redmine/*`).
 
+# Installation du serveur Web
 
+Maintenant nous allons installer et configurer un serveur virtuel pour notre serveur Redmine. Nous utiliserons Nginx comme serveur Web.
+
+## Installation de Nginx
+
+Pour installer Nginx, rien de plus simple :
+
+```bash
+sudo apt-get install nginx
+```
+
+## Configuration du serveur Web
+
+Une fois installé, nous allons configurer le serveur Web. Pour éviter tout conflit avec le serveur par défaut, vous pouvez soit effacer le fichier `default` qui se trouve dans `/etc/nginx/sites-available/` ou bien commenter les lignes avec les ports 80 :
+
+```nginx
+server {
+    #listen 80 default_server;
+    #listen [::]:80 default_server ipv6only=on;
+```
+
+Créez votre fichicer de configuration pour votre serveur virtuel (`vi /etc/nginx/sites-available/redmine`) et ajoutez les lignes ci-dessous :
+
+```nginx
+# Nomme et définit le socket
+upstream redmine_unicorn {
+    server unix:/var/run/redmine/redmine-unicorn.sock fail_timeout=0;
+}
+# Définit le serveur
+server {
+    listen 80 default deferred;
+    client_max_body_size 4g;
+   
+    # Nom du serveur et son dossier root
+    server_name redmine.local.fr;
+    root /usr/local/home/redmine/redmine/public;
+
+    keepalive_timeout 5;
+
+    try_files $uri/index.html $uri.html $uri @app;
+
+    # Configuration du proxy
+    location @app {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_set_header Host $http_host;
+
+        proxy_redirect off;
+
+        proxy_pass http://redmine_unicorn;
+    }
+
+    error_log /var/log/nginx/error.log debug;
+
+    error_page 500 502 503 504 /500.html;
+    location = /500.html {
+        root /usr/local/home/redmine/redmine/public;
+    }
+}
+```
+
+Enregistrez et quittez. Maintenant votre serveur virtuel est configuré, vous n'avez plus qu'a relancer le service Nginx :
+
+```bash
+sudo service nginx restart
+```
+
+Félicitztions ! Vous devriez pouvoir accéder à votre serveur de production via l'url suivante : [http://redmine.local.fr](http://redmine.local.fr).
+
+## Quelques solutions aux erreurs courantes
+
+Si vous n'avez que la page d'accueil de Nginx : 
+
+* Vérifiez que vous avez commenté (ou supprimé) le serveur `default`.
+* Vérifiez que votre fichier de configuration nginx `redmine` n'est pas erroné (il peut manquer un `;` en fin de ligne par exemple).
+
+Si vous avez une page blanche ou d'erreur :
+
+* Consultez les logs de nginx : `sudo tail -f /var/log/nginx/error.log`
+
+N'oubliez pas non plus de **relancer Nginx** à chaque modification sur ses fichiers de configuration.
+
+# Conclusion
+
+Pour résumer, vous savez maintenant comment monter un serveur Redmine stable. Redmine possède ensuite de nombreuses configurations comme les droits, les dépendances entre projets, les différents tickets, des champs personnalisables, etc. Il possède aussi un catalogue de plugins bien fourni, dont un qui vous permettra de synchroniser les utilisateurs Redmine via votre Active Directory. Ou encore un plugin qui vous permettra de lier les tickets de Redmine aux commits de Git (ou d'un serveur Gitlab).
