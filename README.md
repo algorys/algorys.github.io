@@ -6,13 +6,18 @@ Ce blog est destiné avant tout aux intégrateurs et administrateurs qui cherche
 
 ## Tutoriels
 * [Dokuwiki](https://www.dokuwiki.org/) pour la documentation en général.
+* [Redmine](http://www.redmine.org/) : gestion de projets.
+* [Puppet](https://puppetlabs.com/) : serveur d'automation.
+
+## Configuration
+
+* SSH : utiliser et configurer ssh.
 
 ## TODO
 * [Gitlab](https://gitlab.com) : serveur de versionnement des source.
 * [Doxygen](http://www.doxygen.org/) : documentation de code source.
 * [CMake](https://cmake.org) : compilation de sources (C++).
 * [Jenkins](https://jenkins-ci.org) : automatisation des taches et de compilations.
-* [Redmine](http://www.redmine.org/) : gestion de projets.
 * [Prosody](https://prosody.im/) : une messagerie instantanée et XMPP.
 * Gérer un DNS local
 * Créer un plugin pour Dokuwiki
