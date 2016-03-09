@@ -149,9 +149,10 @@ Félicitation, votre Shinken est maintenant opérationnel et va pouvoir monitore
 
 # Installer l'interface Web
 
-Pour que vous puissiez voir si vos hôtes sont bien répertoriés et leurs états, une interface Web est disponible pour Shinken. Pour l'installer il va falloir que vous mettiez un peu plus les mains dans le "cambouis". Et donc dans les fichiers de configurations de Shinken.
+Pour que vous puissiez voir si vos hôtes sont bien répertoriés et leurs états, une interface Web est disponible pour Shinken. Il existe 2 versions de cette interface :
 
-Pour cela, connectez-vous en tant qu'utilisateur Shinken :
+* webui : plus trop maintenue par les développeurs, cette interface est amenée à disparaître. Mais elle est toujours foncionnelle.
+* webui2 : plus à jour, ergonomique et en plein développement. Elle n'est pas encore complète mais déjà très fonctionnelle.
 
 ```bash
 sudo su - shinken
@@ -171,11 +172,15 @@ Creating ini section shinken.io
 Saving the new configuration file /home/shinken/.shinken.ini
 ```
 
-Maintenant vous pouvez installer les modules requis.
+Maintenant vous pouvez installer l'interface que vous souhaitez avoir. Attention, même si les deux `webui` peuvent cohabiter, je vous conseille de n'en choisir qu'une seule afin de pouvoir ensuite mettre à jour facilement les modules.
 
-* L'interface WebUI : `shinken install webui`
-* Le module d'identification : `shinken install auth-cfg-password`
-* Le module pour stocker les données des utilisateurs : `shinken install sqlitedb`
+## Cas 1 : Interface Webui
+
+Pour l'interface Webui, il va falloir d'autres modules. Tapez les commandes suivantes pour les installer :
+
+* `shinken install webui` -> l'interface webui.
+* `shinken install auth-cfg-password` : le module d'authentification de base. (D'autres modules d'authentification existent)
+* `shinken install sqlitedb` : le module pour stocker les données des utilisateurs.
 
 En tapant chaque commande vous devriez avoir la sortie :
 
@@ -184,25 +189,75 @@ Grabbing : module_name
 OK module_name
 ```
 
-Une fois les modules installés, vous allez devoir indiquer à Shinken que vous voulez les utiliser, dans ses fichiers de configuration.
+Une fois les modules installés, vous allez devoir indiquer à Shinken que vous voulez les utiliser.
 
 Éditez le fichier `/etc/shinken/brokers/broker-master.cfg` et trouvez la ligne non commentée où il y a `modules` pour y ajouter **webui** :
 
 ```conf
-# - webui                   = Shinken Web interface
-# - glpidb                  = Save data in GLPI MySQL database
+[...]
 modules    webui
-
-# Enable https or not
+[...]
 ```
 
 Éditez ensuite le fichier `/etc/shinken/modules/webui.cfg` de la même manière pour y ajouter **auth-cfg-password** et **SQLitedb** :
 
 ```conf
-# - SQLitedb              = Save user preferences to a SQLite database
+[...]
 modules     auth-cfg-pasword,SQLitedb
-## Advanced Options
+[...]
 ```
+
+Félicitations ! Votre interface **Webui** est configurée. Si tous les démons de Shinken ont bien été redémarrés, vous devriez voir la page suivante en vous rendant sur l'adresse `http://ip_serveur:7767` :
+
+<figure>
+    <img src="/images/shinken/shinken_webui.png" alt="">
+    <figcaption>Shinken - Écran de connexion Webui</figcaption>
+</figure>
+
+## Cas 2 : Interface Webui2
+
+Pour l'interface Webui2 c'est encore plus simple car elle gère elle-même pas mal de choses par défaut. Par contre vous allez devoir installer quelques librairies de Python supplémentaires, pour qu'elle puisse fonctionner.
+
+En tant qu'utilisateur Shinken, installez `Webui2` :
+
+```bash
+shinken install webui2
+```
+
+Ensuite , en tant qu'utilisateur `root`, installez le programme `pip` et le système de gestion de base de donnée `mongodb` :
+
+```
+sudo apt-get install python-pip mongodb
+```
+
+Vous pouvez installer les librairies suivantes via les paquets de votre distribution, mais vous n'aurez certainement pas les versions requises pour `webui2`. Vous devez donc les installer avec `pip` :
+
+```
+sudo pip install pymongo>=3.0.3 requests arrow bottle==0.12.8
+```
+
+Une fois toutes ces dépendances installées, vous devez indiquer à Shinken le module `webui2` dans le _broker_ (`vi /etc/shinken/brokers/broker-master.cfg`) :
+
+```bash
+[...]
+modules     webui2
+[...]
+```
+
+Redémarrez maintenant Shinken :
+
+```bash
+sudo service shinken restart
+```
+
+Félicitations ! Votre interface **Webui2** est configurée. Si vous vous rendez sur `http://ip_serveur:7767` avec votre navigateur, vous devriez voir la page suivante :
+
+<figure>
+    <img src="/images/shinken/shinken_webui2.png" alt="">
+    <figcaption>Shinken - Écran de connexion Webui2</figcaption>
+</figure>
+
+# Configurer l'utilisateur Admin
 
 Une fois toutes ces manipulations effectuées, vous pouvez aller changer le mot de passe par défaut du compte `admin` dans le fichier `/etc/shinken/contacts/admin.cfg` :
 
@@ -210,7 +265,7 @@ Une fois toutes ces manipulations effectuées, vous pouvez aller changer le mot 
 define contact{
     use             generic-contact
     contact_name    admin
-    email           shinken@localhost
+    email           your@email.com
     pager           0600000000   ; contact phone number
     password        your_password
     is_admin        1
@@ -226,16 +281,106 @@ Vous pouvez vérifier vos configurations en tapant la commande suivante (en éta
 sudo service shinken check
 ```
 
-Redémarrez les services Shinken pour prendre en compte les nouvelles configurations :
+Redémarrez les services Shinken pour prendre en compte la nouvelle configuration :
 
 ```bash
 sudo service shinken restart
 ```
 
-Voilà, votre interface Web est configurée. Si tous les démons de Shinken ont bien été redémarrés, vous devriez voir la page suivante en vous rendant sur `http://ip_serveur:7767` :
+Et connectez vous sur l'interface Web avec votre identifiant et le nouveau mot de passe.
 
-<figure>
-    <img src="/images/shinken/shinken_webui.png" alt="">
-    <figcaption>Shinken - Écran de connexion</figcaption>
-</figure>
+# Commandes et Nagios Plugins
 
+Comme vous pouvez le voir sur l'interface web (ou dans les logs du `scheduler` de Shinken), le seul _hôte_ présent s'appelle **localhost**. Vous devirez même voir l'erreur suivante :
+
+```bash
+[Errno 2] No such file or directory
+```
+
+Et l'hôte sera signalé `DOWN`, c'est à dire que Shinken vous indique que l'hôte est "tombé" ! Pourtant votre serveur fonctionne parfaitement et fait tourner Shinken !
+
+C'est en fait normal car il vous manque quelque chose de très important : des commandes de `check` ! 
+
+## Les commandes et les "paths"
+
+En effet Shinken va avoir besoin de commandes, fonctionnant sur le protocole [snmp](https://fr.wikipedia.org/wiki/Simple_Network_Management_Protocol) pour la plupart, qui vont lui permettre justement de monitorer vos serveurs.
+
+Pour déjà comprendre le fonctionnement de Shinken, ouvrez le fichier suivant (en tant que l'utilisateur `shinken`) :
+
+```bash
+vi /etc/shinken/commands/check_host_alive.cfg
+```
+
+Vous devriez avoir quelque chose de similaire à ça :
+
+```conf
+define command {
+    command_name    check_host_alive
+    command_line    $NAGIOSPLUGINSDIR$/check_ping -H $HOSTADDRESS$ -w 1000,100% -c 3000,100% -p 1
+}
+```
+
+Cela indique que la commande `check_host_alive` est définie comme suit :
+
+* Son Nom : `check_host_alive` (c'est ce qui sera affiché dans les logs ou sur l'interface web)
+* La commande : définie ici par une variable `$NAGIOSPLUGINSDIR$` et une commande `check_ping` avec des paramètres...
+
+Vous avez donc toutes les informations pour savoir ce que fait la commande... mais par contre la variable `$NAGIOSPLUGINSDIR$` n'a été définie nulle part ! 
+
+En fait si ! Elle est définie dans le fichier `/etc/shinken/resource.d/paths.cfg` (ouvrez-le) :
+
+```config
+# Nagios legacy macros
+$USER1$=$NAGIOSPLUGINSDIR$
+$NAGIOSPLUGINSDIR$=/usr/lib/nagios/plugins
+
+#-- Location of the plugins for Shinken
+$PLUGINSDIR$=/var/lib/shinken/libexec
+```
+
+Comme vous pouvez le voir, par défaut, Shinken s'attend à avoir des commandes dans le dossier `/usr/lib/nagios/plugins` ! Mais vu que pour le moment ce dossier n'existe pas, il vous le signale en mettant une erreur (`[Errno 2] No such file or directory`).
+
+Vous allez donc devoir installer les plugins Nagios.
+
+## Installer les plugins Nagios
+
+Pour installer les plugins Nagios, c'est très simple il suffit d'aller les télécharger sur le site officiel : [Nagios-plugins](https://nagios-plugins.org/).
+
+```bash
+cd ~
+wget http://www.nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
+tar -xzvf nagios-plugins-2.1.1.tar.gz
+```
+
+Maitenant vous allez devoir les installer :
+
+```bash
+cd nagios-plugins-2.1.1/
+./configure --with-nagios-user=shinken --with-nagios-group=shinken
+make
+sudo make install
+```
+
+Et voilà, normalement vos plugins sont installés. Il est possible qu'ils ne soient pas installés dans le répertoire par défaut de Shinken (`/usr/lib/nagios/plugins`). Dans ce cas là, faites une recherche pour savoir où ils se trouvent (`whereis nagios` par exemple) et modifiez le fichier `/etc/shinken/resource.d/paths.cfg` en conséquence.
+
+Par exemple :
+
+```conf
+# Nagios legacy macros
+$USER1$=$NAGIOSPLUGINSDIR$
+#$NAGIOSPLUGINSDIR$=/usr/lib/nagios/plugins
+$NAGIOSPLUGINSDIR$=/usr/local/nagios/libexec
+
+#-- Location of the plugins for Shinken
+$PLUGINSDIR$=/var/lib/shinken/libexec
+```
+
+Vous n'avez ensuite plus qu'à redémarrer Shinken pour appliquer ces changements :
+
+```bash
+sudo service shinken restart
+```
+
+Allez voir sur l'interface Web une fois tous les démons redémarrés. Et là normalement votre hôte `localhost` est bien `UP` !
+
+Félicitations ! Vous avez enfin réussi à monitorer un serveur avec Shinken !
