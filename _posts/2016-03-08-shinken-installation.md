@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Installer Shinken pour GLPI
+title: Installer Shinken
 modified:
 categories: [Tuto]
 description: comment installer Shinken
@@ -16,13 +16,13 @@ date: 2016-03-08T10:00:05+01:00
 
 # Introduction
 
-Dans ce tutoriel, nous allons voir comment installer [Shinken](http://www.shinken-monitoring.org/index.php) sur un serveur Linux. En soit l'installation de Shinken n'est vraiment pas difficile et peut être faites de plusieurs manières. La [Documentation](http://shinken.readthedocs.org/en/latest/index.html) est vraiment très bien faites et agréable à lire. Toutefois, ce tutoriel va montrer l'installation via les sources et notamment la façon dont on peut configurer Shinken avec un serveur GLPI et le plugin [glpi_monitoring](https://github.com/ddurieux/glpi_monitoring).
+Dans ce tutoriel, nous allons voir comment installer [Shinken](http://www.shinken-monitoring.org/index.php) sur un serveur Linux. En soit l'installation de Shinken n'est vraiment pas difficile et peut être faites de plusieurs manières. La [Documentation](http://shinken.readthedocs.org/en/latest/index.html) est vraiment très bien faites et agréable à lire. Toutefois, ce tutoriel va montrer l'installation via les sources et notamment la façon dont on peut configurer Shinken et son interface Web.
 
 # Les différentes installations de Shinken
 
 Si vous êtes allé faire un tour sur la documentation de Shinken, vous avez pu voir qu'il existe 3 manière différentes : via [Pip](https://pip.pypa.io/en/stable/) (l'installateur de modules de Python) qui est souvent à jour, via les paquets qui ne sont parfois pas à jour et enfin via les sources du [dépôt Shinken](https://github.com/naparuba/shinken).
 
-Livbre à vous d'installer Shinken comme bon vous semble. Mais le **plus important** est de n'utiliser qu'**une seule manière** pour l'installation et les mises à jour de Shinken ! En aucun cas vous devez mélanger plusieurs type d'installations sous peine de voir votre serveur planter, avoir des bugs ou ne plus marcher du tout !
+Libre à vous d'installer Shinken comme bon vous semble. Mais le **plus important** est de n'utiliser qu'**une seule manière** pour l'installation et les mises à jour de Shinken ! En aucun cas vous devez mélanger plusieurs type d'installations sous peine de voir votre serveur planter, avoir des bugs ou ne plus marcher du tout ! Je vous invite d'ailleurs de vous faire un petit fichier dans votre installation pour noter comment vous avez installé Shinken et ses différents modules / librairies.
 
 # Prérequis
 
@@ -39,7 +39,7 @@ sudo apt-get update
 sudo apt-get install python
 ```
 
-En général, sur Ubuntu Server, Python 2.7 est déjà installé par défaut. Il est possible que sur d'autres OS il ne soit pas disponible via les dépôts de la distribution. Renseignez vous alors sur le site de votre distribution.
+En général, sur Ubuntu Server, Python 2.7 est déjà installé par défaut. Il est possible que sur d'autres distributions il ne soit pas disponible via les dépôts. Renseignez-vous alors sur le site de votre distribution.
 
 ### Installer PyCurl
 
@@ -61,7 +61,7 @@ Voilà, vous avez normalement toutes les dépendances requises pour l'installati
 
 # Récupération des sources de Shinken
 
-Pour récupérer les sources de Shinken et surtout la dernière _release_ rendez vous sur le [dépôt de Shinken](https://github.com/naparuba/shinken) et téléchargez-la :
+Pour récupérer les sources de Shinken et surtout la dernière _release_, rendez-vous sur le [dépôt de Shinken](https://github.com/naparuba/shinken) et téléchargez-la :
 
 
 ```bash
@@ -75,7 +75,7 @@ git checkout 2.4.2
 
 Voilà, votre dossier Shinken est prêt, vous allez pouvoir lancer l'installation.
 
-> Vous pouvez bien évidemment la télécharger avec `wget` ou via une interface graphique, mais je préfère cette méthode, car elle permet de garder une version de Shinken à jour pour votre serveur. Avec Git vous n'aurez qu'à "tirer" les nouvelles version et vous remettre sur un `tag` plus récent.
+> Vous pouvez bien évidemment la télécharger avec `wget` ou via une interface graphique, mais je préfère cette méthode, car elle permettra de mettre à jour plus facilement votre version de Shinken. Avec Git vous n'aurez qu'à "tirer" les nouvelles versions et vous remettre sur un `tag` plus récent.
  
 # Installer Shinken
 
@@ -145,24 +145,27 @@ Starting arbiter:
    ...done.
 ```
 
-Félicitation, votre Shinken est maintenant opérationnel et va pouvoir monitorer les différents serveurs de votre parc. Mais pour cela, il va falloir installer quelques plugins de Shinken et notamment une interface Web.
+Félicitation, votre Shinken est maintenant opérationnel et tous ses démons sont lancés. Vous allez pouvoir monitorer les différents serveurs de votre parc. Mais pour rendre cela plus pratique, il serait bien d'installer une interface Web.
 
 # Installer l'interface Web
 
 Pour que vous puissiez voir si vos hôtes sont bien répertoriés et leurs états, une interface Web est disponible pour Shinken. Il existe 2 versions de cette interface :
 
-* webui : plus trop maintenue par les développeurs, cette interface est amenée à disparaître. Mais elle est toujours foncionnelle.
-* webui2 : plus à jour, ergonomique et en plein développement. Elle n'est pas encore complète mais déjà très fonctionnelle.
+* webui : plus trop maintenue par les développeurs, cette interface est amenée à disparaître. Mais elle est toujours fonctionnelle.
+* webui2 : plus à jour, ergonomique et en plein développement. Elle n'est pas encore complète mais possède déjà tout ce qu'il faut pour être utile.
+
+Connectez vous en tant qu'utilisateur **shinken** :
 
 ```bash
 sudo su - shinken
 ```
 
-Et initialisez la CLI de Shinken pour générer le fichier ini contenant les chemins vers les différents répertoires de configuration :
+Et initialisez la CLI de Shinken pour générer le fichier `.ini` contenant les chemins vers les différents répertoires de configuration :
 
 ```bash
 shinken --init
 ```
+> **Note :** toutes les commandes `shinken` doivent être lancées en tant qu'utilisateur `shinken` !
 
 Vous devriez avoir la sortie suivante :
 
@@ -172,11 +175,13 @@ Creating ini section shinken.io
 Saving the new configuration file /home/shinken/.shinken.ini
 ```
 
-Maintenant vous pouvez installer l'interface que vous souhaitez avoir. Attention, même si les deux `webui` peuvent cohabiter, je vous conseille de n'en choisir qu'une seule afin de pouvoir ensuite mettre à jour facilement les modules.
+Maintenant vous pouvez installer l'interface que vous souhaitez avoir. 
+
+> Attention, même si les deux `webui` peuvent cohabiter, je vous conseille de n'en choisir qu'une, afin de ne pas vous mélanger les pinceaux. Si vous installez les deux interfaces, mettez un port différent pour l'une d'entre elle (autre que le `7767` !).
 
 ## Cas 1 : Interface Webui
 
-Pour l'interface Webui, il va falloir d'autres modules. Tapez les commandes suivantes pour les installer :
+Pour l'interface Webui, il va falloir installer d'autres modules. Tapez les commandes suivantes pour les installer :
 
 * `shinken install webui` -> l'interface webui.
 * `shinken install auth-cfg-password` : le module d'authentification de base. (D'autres modules d'authentification existent)
@@ -191,7 +196,7 @@ OK module_name
 
 Une fois les modules installés, vous allez devoir indiquer à Shinken que vous voulez les utiliser.
 
-Éditez le fichier `/etc/shinken/brokers/broker-master.cfg` et trouvez la ligne non commentée où il y a `modules` pour y ajouter **webui** :
+Ouvrez le fichier `/etc/shinken/brokers/broker-master.cfg` et trouvez la ligne non commentée où il y a `modules` pour y ajouter **webui** :
 
 ```conf
 [...]
@@ -216,7 +221,7 @@ Félicitations ! Votre interface **Webui** est configurée. Si tous les démons 
 
 ## Cas 2 : Interface Webui2
 
-Pour l'interface Webui2 c'est encore plus simple car elle gère elle-même pas mal de choses par défaut. Par contre vous allez devoir installer quelques librairies de Python supplémentaires, pour qu'elle puisse fonctionner.
+Pour l'interface Webui2 l'installation est différente car elle gère elle-même pas mal de choses par défaut. Vous allez devoir installer quelques librairies de Python supplémentaires, pour qu'elle puisse fonctionner.
 
 En tant qu'utilisateur Shinken, installez `Webui2` :
 
@@ -303,7 +308,7 @@ C'est en fait normal car il vous manque quelque chose de très important : des c
 
 ## Les commandes et les "paths"
 
-En effet Shinken va avoir besoin de commandes, fonctionnant sur le protocole [snmp](https://fr.wikipedia.org/wiki/Simple_Network_Management_Protocol) pour la plupart, qui vont lui permettre justement de monitorer vos serveurs.
+En effet Shinken va avoir besoin de commandes, fonctionnant sur le protocole [snmp](https://fr.wikipedia.org/wiki/Simple_Network_Management_Protocol) pour la plupart, qui vont lui permettre de monitorer vos serveurs.
 
 Pour déjà comprendre le fonctionnement de Shinken, ouvrez le fichier suivant (en tant que l'utilisateur `shinken`) :
 
@@ -311,7 +316,7 @@ Pour déjà comprendre le fonctionnement de Shinken, ouvrez le fichier suivant (
 vi /etc/shinken/commands/check_host_alive.cfg
 ```
 
-Vous devriez avoir quelque chose de similaire à ça :
+Vous devriez avoir quelque chose de similaire à :
 
 ```conf
 define command {
@@ -325,9 +330,9 @@ Cela indique que la commande `check_host_alive` est définie comme suit :
 * Son Nom : `check_host_alive` (c'est ce qui sera affiché dans les logs ou sur l'interface web)
 * La commande : définie ici par une variable `$NAGIOSPLUGINSDIR$` et une commande `check_ping` avec des paramètres...
 
-Vous avez donc toutes les informations pour savoir ce que fait la commande... mais par contre la variable `$NAGIOSPLUGINSDIR$` n'a été définie nulle part ! 
+Vous avez donc toutes les informations pour savoir ce que fait la commande... mais par contre il vous manque la définition de la variable `$NAGIOSPLUGINSDIR$` ! 
 
-En fait si ! Elle est définie dans le fichier `/etc/shinken/resource.d/paths.cfg` (ouvrez-le) :
+En fait, elle est définie dans le fichier `/etc/shinken/resource.d/paths.cfg` (ouvrez-le) :
 
 ```config
 # Nagios legacy macros
@@ -338,7 +343,7 @@ $NAGIOSPLUGINSDIR$=/usr/lib/nagios/plugins
 $PLUGINSDIR$=/var/lib/shinken/libexec
 ```
 
-Comme vous pouvez le voir, par défaut, Shinken s'attend à avoir des commandes dans le dossier `/usr/lib/nagios/plugins` ! Mais vu que pour le moment ce dossier n'existe pas, il vous le signale en mettant une erreur (`[Errno 2] No such file or directory`).
+Comme vous pouvez le voir, par défaut, Shinken s'attend à avoir des commandes dans le dossier `/usr/lib/nagios/plugins` ! Mais vu que pour le moment ce dossier n'existe pas et qu'il n'y a pas de commande / fichier `check_ping`, il vous le signale en mettant une erreur (`[Errno 2] No such file or directory`).
 
 Vous allez donc devoir installer les plugins Nagios.
 
@@ -361,7 +366,7 @@ make
 sudo make install
 ```
 
-Et voilà, normalement vos plugins sont installés. Il est possible qu'ils ne soient pas installés dans le répertoire par défaut de Shinken (`/usr/lib/nagios/plugins`). Dans ce cas là, faites une recherche pour savoir où ils se trouvent (`whereis nagios` par exemple) et modifiez le fichier `/etc/shinken/resource.d/paths.cfg` en conséquence.
+Et voilà, normalement vos plugins sont installés. Il est possible qu'ils ne soient pas installés dans le répertoire `/usr/lib/nagios/plugins`. Dans ce cas là, faites une recherche pour savoir où ils se trouvent (`whereis nagios` par exemple) et modifiez le fichier `/etc/shinken/resource.d/paths.cfg` en conséquence.
 
 Par exemple :
 
@@ -381,6 +386,10 @@ Vous n'avez ensuite plus qu'à redémarrer Shinken pour appliquer ces changement
 sudo service shinken restart
 ```
 
-Allez voir sur l'interface Web une fois tous les démons redémarrés. Et là normalement votre hôte `localhost` est bien `UP` !
+Allez voir sur l'interface Web une fois tous les démons redémarrés. Et là normalement votre hôte `localhost` est bien `UP` (il y aura peut-être un petit délai le temps que Shinken relance bien tous ses démons) !
 
 Félicitations ! Vous avez enfin réussi à monitorer un serveur avec Shinken !
+
+# Conclusion
+
+Shinken est assez facile à mettre en place et demande juste un peu d'organisation lors de l'installation de ses modules. Vous pouvez d'ailleurs retrouver une liste de ces modules sur le [site officiel](http://shinken.io/browse/modules/updated) avec leurs différentes configurations. Shinken est aussi capable d'afficher des graphiques sur son interface Web ou bien sur [GLPI](http://glpi-project.org/) grâce au plugin [glpi_monitoring](https://github.com/ddurieux/glpi_monitoring). La communauté est très active et dispose de nombreux développeurs et forums pour vous aider.
