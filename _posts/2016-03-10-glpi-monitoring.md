@@ -3,7 +3,7 @@ layout: post
 title: Installer GLPI-Monitoring
 modified:
 categories: [Tuto]
-description: comment installer et configuer glpi-monitoring
+description: comment installer glpi-monitoring
 tags: [tutoriel, glpi, shinken, monitoring, nagios]
 image:
   feature:
