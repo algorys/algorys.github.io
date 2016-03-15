@@ -280,3 +280,43 @@ sudo tail -f /var/www/glpi/files/_log/*.log
 
 Si tout fonctionne, il ne vous restera plus qu'à configurer vos commandes, vos composants et des catalogues de composants (ou de services). Ils seront ensuite disponibles dans les différents menus (État des machines, Ressources, Métriques, etc...).
 
+# Configurer un catalogue
+
+## Commandes
+
+Les commandes définies dans **glpi-monitoring** ne sont pas forcément configurées pour votre installation. Vous pouvez ne pas avoir les plugins prédéfinis et votre variable `$NAGIOSPLUGINSDIR$` doit être mis à jour en fonction de votre configuration.
+
+Pour rappel vous pouvez configurer vos `$PATH` dans : `SHINKEN_DIR/resource.d/paths.cfg` (sur votre serveur Shinken).
+
+Il est aussi mieux de tester la commande en local avant pour voir si elle fonctionne bien. Par exemple :
+
+```bash
+user@shinken:~$./check_snmp_storage.pl -H 127.0.0.1 -C public -m / -w 80% -c 90% -G
+/dev: 0%used(0GB/0GB) /: 20%used(11GB/57GB) (<80%) : OK
+```
+
+## Composants
+
+Une fois une commande définie, il faut que vous associez un `composant` à celle-ci afin de pouvoir l'appliquer par la suite. Remplissez au minimum les champs suivant :
+
+* Donnez un nom
+* Sélectionnez la commande que vous souhaitez
+* Sélectionnez un gabarit de graphique. La plupart des gabarits sont déjà bien défini. Si il vous manque un gabarit de graphique, créez-en un :
+  * Il suffit de mettre votre commande dans le champ `Exemple de perfdata pour ce contrôle` et de cliquer sur **Sauvegarder**. Le plugin vous génèrera tout seul le gabarit.
+* Définissez un Contrôle : cela sert à savoir combien de fois shinken va tenter cette commande avant de changer d'état.
+* Contrôle actif => Oui
+* Contrôle passif => Oui
+* Période de contrôle : sélectionnez une période.
+
+Puis sauvegardez !
+
+## Catalogue de Composants
+
+Il ne vous reste plus qu'à définir un catalogue de composant pour tout ça. Le catalogue sera à définir selon vos souhaits : plusieurs hôtes par catalogues ou non, plusieurs composants, etc... Libre à vous de voir comment vous voulez ensuite monitorer vos hôtes. Toutefois le processus, ressemblera à peu près à ce qui suit :
+
+* Donnez lui un nom
+* Rajoutez un (ou plusieurs) composant
+* Rajoutez un hôte : vous pouvez définir une règle pour l'importer de façon dynamique ou choisir un hôte statique.
+* Rajoutez un contact : vous pouvez aussi rajouter un contact qui sera prévenu si l'_état_ de vos composants change (UP, DOWN, WARNING, etc...).
+
+Une fois votre catalogue défini, Shinken devrait normalement redémarrer automatiquement lorsque vous cliquerez sur **Ajouter** et donc rajouter le catalogue créé.

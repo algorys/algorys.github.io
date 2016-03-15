@@ -59,7 +59,7 @@ Pour récupérer la dernière version de GLPI, il suffit de se rendre sur la [pa
 wget https://github.com/glpi-project/glpi/releases/download/0.90.1/glpi-0.90.1.tar.gz
 ```
 
-## Installation de l'archive
+## Installation de l'archive
 
 Décompressez l'archive téléchargée dans la racine de votre serveur Web (ici `/var/www/` pour Apache2) :
 

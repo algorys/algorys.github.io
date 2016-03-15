@@ -16,15 +16,15 @@ date: 2016-03-14T13:20:05+01:00
 
 # Introduction
 
-[Fusion Inventory pour GLPI](https://github.com/fusioninventory/fusioninventory-for-glpi) est un plugin permettant de collecter des données à partir d'agents [FusionInventory](http://fusioninventory.org/) et de mettre à jour celles se trouvant dans l'inventaire de GLPI. Les agents peuvent aussi bien inventorier des Ordinateurs, que des équipements réseaux ou même des appareils Android et bien sûr des machines virtuelles.
+[Fusion Inventory pour GLPI](https://github.com/fusioninventory/fusioninventory-for-glpi) est un plugin permettant de collecter des données à partir d'agents [FusionInventory](http://fusioninventory.org/) installés sur des hôtes. Il permet de mettre à jour les données se trouvant dans l'inventaire de GLPI et cela de manière automatique. Les agents peuvent aussi bien inventorier des Ordinateurs, que des équipements réseaux ou même des appareils Android et bien sûr des machines virtuelles.
 
-Les agents peuvent être déployer par stratégies (GPO) ou via des scripts et fonctionne sur la plupart des OS (Windows, OSX et Linux).
+Les agents peuvent être déployés par stratégie (GPO) ou via des scripts et fonctionnent sur la plupart des OS (Windows, OSX et Linux).
 
-Le tout peut être mis à jour régulièrement par GLPI et peut faciliter grandement l'inventaire de votre parc informatique.
+Ce genre de processus peut faciliter grandement l'inventaire de votre parc informatique et donc la vie des "Sysadmin".
 
-# Prérequis
+# Prérequis
 
-Pour suivre ce tuto, il vaut mieux avoir un serveur [GLPI](/tuto/glpi-installation/) et de préférence en version 0.90.1 dans ce cas. Les autres versions de GLPI devrait demander une démarche quasi similaire.
+Pour suivre ce tutoriel, il vaut mieux avoir un serveur [GLPI](/tuto/glpi-installation/) et de préférence en version `0.90.1`. Cependant les autres versions de GLPI devraient avoir une configuration quasi similaire.
 
 * Un accès `root`sur ce serveur sera nécessaire.
 * Il vous faut aussi un (ou des) serveur/client Linux sur lequel installer l'agent.
@@ -68,7 +68,7 @@ Félicitation, votre plugin est prêt à repérer ses agents.
 
 # Installer un agent
 
-## Windows
+## Windows
 
 L'installation sur Windows est assez simple, il suffit de télécharger le client sur la [page dédiée](http://forge.fusioninventory.org/projects/fusioninventory-agent-windows-installer/files) et de choisir le bon exe.
 
@@ -80,7 +80,7 @@ ou si vous avez un DNS :
 
 `http://fqdn/plugins/fusioninventory`
 
-## Linux
+## Linux
 
 Pour Linux, c'est un peu différent, il va falloir rajouter les dépôts et installer à partir de ceux-ci ou faire une installation à partir des sources.
 
@@ -164,7 +164,7 @@ if [ -f //usr/local/etc/fusioninventory/agent.cfg ]; then \
     fi
 ```
 
-### Dépendances Perl
+### Dépendances Perl
 
 Il est possible qu'il vous manque encore quelques dépendances lorsque vous lancerez l'agent pour la première fois. Pour résoudre ce genre de problème, il suffit d'installer les modules manquants avec la commande suivante en remplaçant `MODULE:MODULE` par le nom correspondant :
 
