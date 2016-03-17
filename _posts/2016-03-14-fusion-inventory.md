@@ -16,7 +16,7 @@ date: 2016-03-14T13:20:05+01:00
 
 # Introduction
 
-[Fusion Inventory pour GLPI](https://github.com/fusioninventory/fusioninventory-for-glpi) est un plugin permettant de collecter des données à partir d'agents [FusionInventory](http://fusioninventory.org/) installés sur des hôtes. Il permet de mettre à jour les données se trouvant dans l'inventaire de GLPI et cela de manière automatique. Les agents peuvent aussi bien inventorier des Ordinateurs, que des équipements réseaux ou même des appareils Android et bien sûr des machines virtuelles.
+[Fusion Inventory pour GLPI](https://github.com/fusioninventory/fusioninventory-for-glpi) est un plugin permettant de collecter des données à partir d'agents [FusionInventory](http://fusioninventory.org/) installés sur des hôtes. Il permet de mettre à jour les données se trouvant dans l'inventaire de GLPI et cela de manière automatique. Les agents peuvent aussi bien inventorier des ordinateurs, que des équipements réseaux ou même des appareils Android et bien sûr des machines virtuelles.
 
 Les agents peuvent être déployés par stratégie (GPO) ou via des scripts et fonctionnent sur la plupart des OS (Windows, OSX et Linux).
 
@@ -30,11 +30,11 @@ Pour suivre ce tutoriel, il vaut mieux avoir un serveur [GLPI](/tuto/glpi-instal
 * Il vous faut aussi un (ou des) serveur/client Linux sur lequel installer l'agent.
 * Un (ou des) serveur/client Windows pour installer un agent
 
-> Il n'est pas forcément obligatoire d'avoir un Windows et un Linux, mais les deux peuvent servir.
+> Il n'est pas forcément obligatoire d'avoir un Windows et un Linux pour suivre ce tutoriel, mais les deux peuvent servir.
 
 # Récupération de l'archive
 
-Pour récupérer le plugin Fusion Inventory pour GLPI, il vous faudra Git. Installez-le si ce n'est pas déjà fait :
+Pour récupérer le plugin Fusion Inventory pour GLPI, vous pouvez passez par Git. Installez-le si ce n'est pas déjà fait :
 
 ```bash
 sudo apt-get install -y git
@@ -70,7 +70,7 @@ Félicitation, votre plugin est prêt à repérer ses agents.
 
 ## Windows
 
-L'installation sur Windows est assez simple, il suffit de télécharger le client sur la [page dédiée](http://forge.fusioninventory.org/projects/fusioninventory-agent-windows-installer/files) et de choisir le bon exe.
+L'installation sur Windows est assez simple, il suffit de télécharger le client sur la [page dédiée](http://forge.fusioninventory.org/projects/fusioninventory-agent-windows-installer/files) et de choisir le bon `.exe`.
 
 Ensuite vous n'avez qu'à suivre l'installation et indiquer l'url de votre serveur GLPI correspondante :
 
@@ -94,7 +94,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 049ED9B9476557
 
 > **Note :** La documentation officielle indique l'adresse `keyserver.ubuntu.com` sans port ni URI. Toutefois sous Ubuntu Server j'ai du forcer le port 80 et rajouter `hkp://` pour que la commande aboutisse.
 
-Si vous n'avez pas `lsb-release` d'installé, installez-le :
+Si vous n'avez pas l'outil `lsb-release`, installez-le :
 
 ```bash
 sudo apt-get install lsb-release
@@ -115,7 +115,7 @@ sudo apt-get install fusioninventory-agent
 
 ### Installation à partir des sources
 
-Pour installer à partir des sources, il faut déjà s'occuper des dépendances requises à installer :
+Pour l'installer à partir des sources, il faut déjà s'occuper des dépendances requises à installer :
 
 ```
 sudo apt-get install dmidecode nmap make
@@ -172,11 +172,21 @@ Il est possible qu'il vous manque encore quelques dépendances lorsque vous lanc
 sudo perl -MCPAN  -e 'install "MODULE:MODULE"'
 ```
 
-Par précaution, il vaut mieux vérifier sur le [dépôt de l'agent](https://github.com/fusioninventory/fusioninventory-agent) pour voir les dépendances requises.
+Actuellement, le `core` demande au minimum les dépendances suivantes :
+
+* Config::Tiny
+* File::Which
+* LWP::UserAgent
+* Net::IP
+* Text::Template
+* UNIVERSAL::require
+* XML::TreePP
+
+Vous pouvez vérifier sur le [dépôt de l'agent](https://github.com/fusioninventory/fusioninventory-agent) pour voir toutes les dépendances requises. 
 
 ### Configurer l'agent
 
-En focntion de votre installation, vous devriez avoir un fichier de configuration pour votre agent dans un dossier `FOLDER/fusioninventory/agent.cfg`. Ouvrez-le et décommentez la ligne `#server`. Modifiez ensuite l'url pour correspondre à votre isntallation GLPI :
+En fonction de votre installation, vous devriez avoir un fichier de configuration pour votre agent dans un dossier `FOLDER/fusioninventory/agent.cfg`. Ouvrez-le et décommentez la ligne `#server`. Modifiez ensuite l'url pour correspondre à votre isntallation GLPI :
 
 ```conf
 [...]
@@ -187,7 +197,7 @@ server = http://glpi_fqdn/plugins/fusioninventory/
 
 ## Lancer l'agent
 
-Maintenant que vous avez votre agent d'installé, vous povez le lancer. Pour cela il suffit de taper la commande suivante :
+Maintenant que vous avez votre agent d'installé, vous pouvez le lancer. Pour cela il suffit de taper la commande suivante :
 
 ```bash
 sudo fusioninventory-agent
@@ -215,7 +225,7 @@ Cela devrait vous afficher les matériels trouvés.
 
 # Programmer une tâche
 
-Il va falloir importer tout ça dans GLPI et pour ça, il faut configurer une tâche dans celui-ci. Mais avant de commencer, faites une vérification de la bonne remontée de votre agent sur GLPI. Rendez-vous sur l'interface web de GLPI et allez dans **Plugins => FusionInventory**. Allez dans **Général => Gestion des agents**. Si vous avez déjà lancé votre agent une fois (voir ci-dessus), vous devriez voir apparaître votre agent sur cette page. Si ce n'est pas le cas, vous avez dû faire une erreur quelque part.
+Il va falloir importer tout ça dans GLPI et pour ça, il faut configurer une tâche dans celui-ci. Mais avant de commencer, faites une vérification de la bonne détection de votre agent sur GLPI. Rendez-vous sur l'interface web de GLPI et allez dans **Plugins => FusionInventory**. Allez dans **Général => Gestion des agents**. Si vous avez déjà lancé votre agent une fois (voir ci-dessus), vous devriez voir apparaître votre agent sur cette page. Si ce n'est pas le cas, vous avez dû faire une erreur quelque part, vérifiez les étapes précédentes.
 
 ## Créer une tâche
 
@@ -241,15 +251,15 @@ Si vous retournez dans l'accueil de la Gestion des tâches, vous devriez voir la
 
 ## Démarrer la tâche
 
-Si vous allez dans **Tâches => Monitoring / logs**, vous devriez voir votre tâche avec plusieurs noms d'étapes en dessous et des zéros en face de chacun des noms. Le but maintenant va être de mettre votre tâche en _Préparé_ !
+Si vous allez dans **Tâches => Monitoring / logs**, vous devriez voir votre tâche avec plusieurs noms d'étapes en dessous et des zéros en face de chacun des noms. Vous pouvez voir que pour le moment la tâche est inactive. Le but maintenant va être de mettre votre tâche en _Préparé_ !
 
 Pour ça on va changer d'endroit, allez dans **Configuration => Actions automatiques**. Cela va vous afficher différentes actions que GLPI va exécuter en fonction de ses différents plugins / tâches. Cherchez l'action qui s'appelle **taskscheduler** et cliquez dessus !
 
 > Dans d'autres versions de GLPI et de Fusioninventory, il me semble que l'action s'appelle différemment. Regardez bien si elle est liée à Fusioninventory, normalement c'est indiqué.
 
-Ça n'a l'air de rien comme ça, mais beaucoup d'_entre nous_ ont galérer pour trouver comment faire cette manipulation. Une fois sur la page de l'action **taskscheduler**, cliquez sur **Éxécuter** !
+Ça n'a l'air de rien comme ça, mais beaucoup d'_entre nous_ ont galéré pour trouver comment faire cette manipulation. Une fois sur la page de l'action **taskscheduler**, cliquez sur **Éxécuter** !
 
-Si vous retournez sur votre tâche de Fusioninventory, onglet **Monitoring / Logs**, elle devrait être passée en **Préparé** ! Si ce n'est pas le cas, vous pouvez sélectionner juste au-dessus l'**Intervalle dez rafrachissement** des tâches. En général, 5 secondes suffisent.
+Si vous retournez sur votre tâche de Fusioninventory, onglet **Monitoring / Logs**, elle devrait être passée en **Préparé** ! Si ce n'est pas le cas, vous pouvez sélectionner juste au-dessus l'**Intervalle de rafrachissement** des tâches. En général, 5 secondes suffisent.
 
 Maintenant, retournez sur votre console et lancez l'agent :
 
@@ -257,22 +267,84 @@ Maintenant, retournez sur votre console et lancez l'agent :
 sudo fusioninventory-agent
 ```
 
-Et suivez le déroulement de votre tâche dans GLPI. Elle devrait passer **En cours** (en violet notamment). Vous pouvez cliquez dessus, cela affichera votre agent et la tâche qu'il effectue. Vous pouvez aussi cliquez sur le nom de votre agent pour voir plus de détails.
+Et suivez le déroulement de votre tâche dans GLPI. Elle devrait passer **En cours** (en violet notamment). Vous pouvez cliquez dessus, cela affichera votre agent et la tâche qu'il effectue. Vous pouvez ensuite cliquer sur le nom de votre agent pour voir plus de détails.
 
-En fonction de la plage que vous avez définie, la vitesse de votre réseau, le nombre de matériels à trouvés, la tâche peut prendre plus ou moins de temps avant de passer en **Succès** (vert).
+En fonction de la plage que vous avez définie, la vitesse de votre réseau et le nombre de matériels à trouver, la tâche peut prendre plus ou moins de temps avant de passer en **Succès** (vert).
 
 ## Voir le matériel trouvé
 
-Une fois que l'agent a fini son petit boulot, votre métériel a du être ajouté automatiquement dans GLPI. Fusioninventory doit d'ailleurs (dans les logs) vous afficher le message suivant :
+Une fois que l'agent a fini son petit boulot, votre matériel a du être ajouté automatiquement dans GLPI. Fusioninventory doit d'ailleurs (dans les logs) vous afficher le message suivant :
 
 ```
-XXXX-XX-XX HH:MM:SS Ok  Total Found:XX Created:XX Updated:0
+YYYY-DD-MM HH:MM:SS Ok  Total Found:XX Created:XX Updated:X
 ```
 
-Si ce n'est pas le cas ou que le plugin vous indique le message `Import Denied`, cela veut dire que les **Règles** du plugin sont trop restrictive pour infrastructure. En effet, Fusioninventory a des règles par défaut définies dans **Règles => Règles d'import et de liaison des matériels**. Votre inventaire a en fait réussi, mais Fusioninventory les a mis dans une sorte de blacklist dans **Règles => Matériels ignorés à l'import**.
+Si ce n'est pas le cas ou que le plugin vous indique le message `Import Denied`, cela veut dire que les **Règles** du plugin sont trop restrictive pour infrastructure. En effet, Fusioninventory a des règles par défaut définies dans **Règles => Règles d'import et de liaison des matériels**. Votre inventaire peut avoir réussi, mais Fusioninventory ne les a pas "validé" et les a mis dans une sorte de blacklist dans **Règles => Matériels ignorés à l'import**.
 
-Si le plugin vous a bien importé votre matériel, vous n'allez pas le retrouver directement dans **Parc**. Il faut que vous alliez dans **Parc => Equipement non-géré** et là surprise, vous avez tous vos équipements trouvés qui sont ici.
+Si le plugin vous a bien importé votre matériel, vous n'allez pas le retrouver directement dans **Parc**. Il faut que vous alliez dans **Parc => Equipement non-géré** et là surprise, vous avez tous vos équipements trouvés !
 
-Si vous considérer que tout ce matériel est connus et va vous servir dans votre inventaire, vous pouvez l'importer en le sélectionnant et en indiquant le **type** d'équipement, sinon GLPI refusera de vous les importer (normal car il ne sera pas où le ranger). Une fois les équipements typés, re-sélectionnez-les puis faites **Actions** et **Import**.
+Si vous considérez que tout ce matériel est (re)connu et va vous servir pour votre inventaire, vous pouvez l'importer en le sélectionnant et en indiquant le **type** d'équipement, sinon GLPI refusera de vous les importer (normal car il ne sera pas où le ranger). Une fois les équipements _typés_, re-sélectionnez-les puis faites **Actions** et **Import**.
 
-Si maintenant vous allez voir dans **Ordinateurs** (ou autre en fonction de ce que vous avez importé), vos équipements sont bien là avec déjà pas mal de données remplies ! Félicitations !
+Si maintenant vous allez voir dans **Ordinateurs** (ou autre en fonction de ce que vous avez importé), vos équipements sont bien là avec déjà pas mal de données pré-remplies. Vous pouvez d'ailleurs ensuite dire à GLPI de protéger les données déjà importées et de ne plus y toucher (regardez dans les `verrous`) !
+
+Félicitations, vous avez fait le plus gros du boulot !
+
+# Automatiser une tâche
+
+Évidemment, tout ça est très bien, mais lancer l'agent à la main sur GLPI et sur Shinken, ce n'est pas très pratique... Il faut donc automatiser le processus. Si vous avez fouillé dans tout le Web comme moi à la recherche de tutoriel sur ce plugin, vous êtes certainement tombé sur ce problème. En fait, il y a une solution qui se trouve sur le [wiki officiel](http://wiki.glpi-project.org/doku.php?id=fr:config:crontab) mais qui n'est pas forcément facile à trouver.
+
+On va donc définir 2 choses :
+
+* Une tâche `cron` pour lancer le pseudo-cron de GLPI.
+* Une tâche `cron` pour l'agent fusioninventory.
+
+> Dans une précédente version de fusioninventory, il me semble que le mode Démon ne marchait pas très bien. C'est donc pour ça que j'ai configuré l'agent sous `cron`. Pour lancer l'agent en démon, il suffit juste de lui rajouter l'option `-d`. Vous pouvez rajouter `--debug` pour qu'il soit plus parlant.
+
+## Tâche Cron pour Fusioninventory
+
+Pour configurer l'agent fusioninventory sous cron, il faut utiliser le cron de `root` ou un autre si vous avez un utilisateur dédié, mais au moins qui ai les droit pour le lancer. Ensuite, il faut simplement lui indiquer le temps voulu dans cron (`sudo crontab -e`) :
+
+```conf
+# Adaptez le chemin de fusioninventory à ce job !
+# La tâche s'exécutera ici tous les jours de chaque mois à 3h05.
+5 3 * * * /usr/local/bin/fusioninventory-agent
+```
+
+Enregistrez et quittez.
+
+## Tache Cron pour GLPI
+
+Comme dit sur la documentation citée ci-dessus, il suffit d'éditer le cron de **l'utilisateur du serveur web** qui fait tourner GLPI ! Si vous le faites sur un autre, cela ne marchera pas. A noter qu'il vous faut `php5-cli` comme prérequis :
+
+```bash
+sudo apt-get install php5-cli
+```
+
+Une fois cela fait lancer l'éditeur de cron pour votre utilisateur :
+
+```bash
+sudo crontab -u www-data -e
+```
+
+Puis ajouter la ligne suivante à la fin du fichier :
+
+```conf
+# Le chemin de GLPI doit correspondre à celui de votre installation !
+*/1 * * * * /usr/bin/php5 /var/www/glpi/front/cron.php &>/dev/null
+```
+
+Enregistrez et quittez **crontab**. 
+
+Cette tâche va toutes les minutes accéder au fichier `cron.php`. Vous pouvez définir une autre fréquence en fonction de votre installation, libre à vous de voir ce qui est le plus productif. Le job va donc créer artificiellement une activité dans GLPI ce qui aura pour conséquence de déclencher les actions automatiques de GLPI, dont notre `taskscheduler`.
+
+# Conclusion
+
+Si vous êtes patient, vous pouvez attendre 3h du matin pour voir si ça marche... sinon vous pouvez réduire le temps du job de l'agent, pour déjà tester votre processus. Vous pourrez suivre ensuite votre inventaire sur GLPI dans le **Monitoring / Logs** de Fusioninventory. Il va passer en _Préparé_, puis ensuite suivra les étapes jusqu'à la fin. Vous pouvez aussi vérifier la bonne marche de ces jobs via les logs de Cron :
+
+```bash
+grep CRON /var/log/syslog
+```
+
+Maintenant vous avez un moyen d'automatiser l'inventaire de votre parc de façon simple et surtout vous êtes sûr que vos données restent à jour.
+
+
