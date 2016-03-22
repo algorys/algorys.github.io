@@ -16,7 +16,9 @@ date: 2016-03-21T14:50:07+01:00
 
 # Introduction
 
-[Gitlab](https://about.gitlab.com/) est un serveur similaire à [Github](https://github.com). Il permet d'administrer et de centraliser vos dépôts [Git](https://git-scm.com/) d'une manière pratique grâce à une interface Web, une gestion de tickets, une API et plein d'autres fonctionnalités par rapport à un simple dépôt `bare`. L'avantage avec un tel serveur c'est qu'il vous permet de voir l'état de vos dépôts depuis n'importe quel plateforme / poste et surtout il amène une gestion de groupe complète et des outils pour discuter avec d'autres serveurs (comme Jenkins par exemple).
+[Gitlab](https://about.gitlab.com/) est un serveur similaire à [Github](https://github.com). Il permet d'administrer et de centraliser vos dépôts [Git](https://git-scm.com/) d'une manière pratique grâce à une interface Web, une gestion de tickets, une API et plein d'autres fonctionnalités par rapport à un simple dépôt `bare`. 
+
+L'avantage avec un tel serveur c'est qu'il vous permet de voir l'état de vos dépôts depuis n'importe quel plateforme / poste et surtout il amène une gestion de groupe complète et des outils pour discuter avec d'autres serveurs (comme Jenkins par exemple).
 
 Ce tutoriel permet d'installer Gitlab dans sa version `Community`. Il reprend le [tutoriel officiel](http://doc.gitlab.com/ce/install/installation.html#packages-dependencies) déjà très bien fait et ne fait qu'apporter un peu plus d'indices (et de français !).
 
@@ -535,7 +537,7 @@ GitLab and all its components are up and running.
 
 # L'interface Web avec Nginx
 
-Voilà, votre serveur Gitlab tourne ! Félicitations ! Mais il manque maitnenant l'interface web !
+Voilà, votre serveur Gitlab tourne ! Félicitations ! Il ne reste plus que l'interface web à configurer.
 
 Nous allons desservir Gitlan avec Nginx, qui est de base, le serveur Web officiellement supporté par Gitlab. Installez Nginx sur votre serveur :
 
@@ -543,7 +545,7 @@ Nous allons desservir Gitlan avec Nginx, qui est de base, le serveur Web officie
 sudo apt-get install -y nginx
 ```
 
-## Configurer le site
+## Configurer le site
 
 Comme depuis le début, vous avez déjà un fichier d'example à copier et vous n'avez qu'à activer le site avec un lien symbolique :
 
@@ -564,7 +566,7 @@ listen [::]:80 default_server;
 server_name gitlab.local.fr;
 ```
 
-## tester votre configuration
+## Tester votre configuration
 
 Validez votre configuration Nginx avec la commande suivante :
 
@@ -604,9 +606,9 @@ gitlab-shell self-check failed
   Please fix the error above and rerun the checks.
 ```
 
-Vérifiez que vous avez bien renseigné le FQDN dans `/home/git/gitlab-shell/config.yml` et dans Nginx. Regardez votre fichier host ! (la boucle locale était sur `127.0.1.1`, j'ai du passer en `127.0.0.1` afin de régler ce problème). Et vérifiez que votre DNS puisse être résolu ! (Solution trouvé [sur ce post](http://stackoverflow.com/questions/19859216/double-checking-gitlab-installation-gitlab-shell-self-check-failed)
+Vérifiez que vous avez bien renseigné le FQDN dans `/home/git/gitlab-shell/config.yml` et dans Nginx. Regardez votre fichier host ! (la boucle locale était sur `127.0.1.1`, j'ai du passer en `127.0.0.1` afin de régler ce problème). Et vérifiez que votre DNS puisse être résolu ! (Solution trouvé [sur ce post](http://stackoverflow.com/questions/19859216/double-checking-gitlab-installation-gitlab-shell-self-check-failed) )
 
-Si toutes les données sont vertes, votre configuration est fonctionnelle !
+Si toutes les données sont **vertes**, votre configuration est fonctionnelle !
 
 # Visistez l'interface Web
 
@@ -630,7 +632,7 @@ Voilà, votre serveur Gitlab est prêt à recevoir vos dépôts !
 
 Si vous souhaitez que vos utilisateurs s'enregistrent tout seuls, vous n'avez rine à configurer car par défaut Gitlab propose à l'accueil de s'enregistrer. Vous pouvez désactiver cela dans la zone _Admin_(la petite clé en haut à droite) => Settings. décochez la case **Sign-up enabled**.
 
-## utilisateurs LDAP
+## Utilisateurs LDAP
 
 Si vous avez un serveur LDAP pour votre entreprise, vous pouvez configurer Gitlab pour qu'il prennent en compte votre Active Directory. Ouvrez votre fichier de configuration principal (`sudo -u git -H vi /home/git/gitlab/config/gitlab.yml`) et rajoutez vos informations comme suis :
 
