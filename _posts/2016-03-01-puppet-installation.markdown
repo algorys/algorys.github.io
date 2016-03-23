@@ -3,7 +3,7 @@ layout: post
 title: Installer Puppet
 modified:
 categories: [Tuto]
-description: comment installer puppet
+description: Comment installer puppet
 tags: [tutoriel, puppet, automation]
 image:
   feature:
@@ -18,13 +18,13 @@ date: 2016-03-01T09:52:05+01:00
 
 Puppet, de Puppet Labs, est un outil qui aide les administrateurs à automatiser le provisionnement, la configuration et l'administration de leur infrastructure réseau. Utiliser ce genre d'outil permet de réduire le temps dépensé sur les tâches de base qui sont souvent répétitives et assure une consistance de votre infrastructure.
 
-Puppet est disponible en deux versions : Puppet Enterprise et Puppet Open Source. Il fonctionne avec un système d'Agents, associées à un serveur Maître.
+Puppet est disponible en deux versions : Puppet Enterprise et Puppet Open Source. Il fonctionne avec un système d'Agents, associés à un serveur Maître.
 
 Ce tutoriel est basé sur celui de [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-puppet-to-manage-your-server-infrastructure). Je n'ai pas traduis, ni mis à jour la partie pour bloquer les versions de Puppet, mais si vous êtes en production, il vaut mieux effectuer cette opération.
 
 # Prérequis
 
-Pour suivre ce tutoriel, vous devez avoir un accès **root** sur les serveurs que vous allez manipuler. Vous devez également disposer d'un DNS ou y avoir accès. Si vous suivez ce tutoriel à des fins de tests, il est conseillé d'utiliser des machines virtuelles et de faire des snapshots de vos machines vierges. Ainsi, vous pourrez facilement les "remettre à zéro" lors de nouveaux essais. 
+Pour suivre ce tutoriel, vous devez avoir un accès **root** sur les serveurs que vous allez manipuler. Vous devez également disposer d'un DNS ou y avoir accès. Si vous suivez ce tutoriel à des fins de tests, il est conseillé d'utiliser des machines virtuelles et de faire des snapshots de vos machines vierges. Ainsi, vous pourrez facilement les "remettre à zéro" lors de nouveaux essais.
 
 Ce tutoriel couvre l'installation de Puppet sur des système Debian ou Ubuntu. Si vous avez une autre distribution, renseignez vous sur l'installation de Puppet pour celle-ci. Les fichiers de configurations de Puppet seront normalement sensiblement identiques.
 
@@ -66,7 +66,7 @@ Maintenant nous allons régler le service NTP du serveur.
 
 Vu que Puppet utilise un système de certificat pour les noeuds (agents), le serveur Maître doit maintenir son temps à jour. Si les serveurs ont un temps qui divergent de trop, vous risquez d'avoir des problèmes de certificats qui ne sont plus à jour.
 
-Mettez vos dépôts à jour et installez NTP :
+Mettez à jour vos dépôts et installez NTP :
 
 ```bash
 sudo apt-get update && sudo apt-get -y install ntp
@@ -366,7 +366,7 @@ facter
 
 ## Comment le Manifeste Principal est exécuté ?
 
-L'agent Puppet vérifie périodiquement le serveur Maître (en général toutes les 30 minutes). Durant ce temps, il envoie les données qui le concerne au maître, et "tire" le catalogue courant (une liste compilée des ressources désirées et leurs états voulus déterminée par le manifeste principal). L'agent "noeud" essaie ensuite d'appliquer les changements pour arriver à l'état désiré. Ce cycle se répète tant que le Maître est en ligne et communique avec les agents "noeuds".
+L'agent Puppet vérifie périodiquement le serveur Maître (en général toutes les 30 minutes). Durant ce temps, il envoie les données qui le concerne au maître, et "tire" le catalogue courant (une liste compilée des ressources désirées et leurs états voulus, déterminée par le manifeste principal). L'agent "noeud" essaie ensuite d'appliquer les changements pour arriver à l'état désiré. Ce cycle se répète tant que le Maître est en ligne et communique avec les agents "noeuds".
 
 ## Exécution Immédiate sur un Agent
 
@@ -389,7 +389,7 @@ Info: Caching catalog for puppetone.localdomain
 Info: Applying configuration version '1407966707'
 ```
 
-## Manifestes isolé
+## Manifestes isolés
 
 La commande `puppet apply` permet d'exécuter des manifestes qui ne sont pas ratachés au manifeste principal. Cela applique uniquement le manifeste au noeud sur lequel vous exécuter cette commande. Voici un exemple :
 
@@ -455,7 +455,7 @@ Ces exemples ne sont dans la réalité pas très utiles (en effet ils ne font ri
 
 # Utiliser un Module
 
-Maintenant nous allons utiliser un module. Les modules sont utiles pour regrouper plusieurs tâches. Il existe déjà de nombreux modules écrit par la communauté Puppet, et vous pouvez écrire le votre.
+A présent, nous allons utiliser un module. Les modules sont utiles pour regrouper plusieurs tâches. Il existe déjà de nombreux modules écrit par la communauté Puppet, et vous pouvez écrire le votre.
 
 Sur le Maître, installez le module `puppetlabs-apache` de _forgeapi_.
 
@@ -484,5 +484,5 @@ Félicitations ! Vous avez utilisé votre premier module Puppet !
 
 # Conclusion
 
-Maintenant vous avez une installation basique de Puppet. Je ferais bientôt un tutoriel plus avancé sur les manifestes et les modules.
+Vous savez comment avoir une installation basique de Puppet. Je ferais bientôt un tutoriel plus avancé sur les manifestes et les modules.
 

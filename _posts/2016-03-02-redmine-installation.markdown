@@ -3,7 +3,7 @@ layout: post
 title: Installer Redmine 3.0
 modified:
 categories: [Tuto]
-description: comment installer redmine
+description: Comment installer Redmine
 tags: [tutoriel, redmine]
 image:
   feature:
@@ -16,7 +16,7 @@ date: 2016-03-02T12:00:05+01:00
 
 # Introduction
 
-Dans les entreprises, il y a toujours plusieurs projets qui demandent un suivi, une gestion de tickets, de documents, de temps passé, etc. Certains logiciels payant font très bien ce travail mais ont quand même un certain coût. Pour pallier à cela, il existe des gestionnaires de projets Open Source, comme [Redmine](http://www.redmine.org/).
+Dans les entreprises, il y a toujours plusieurs projets qui demandent un suivi, une gestion de tickets, de documents, de temps passé, etc. Certains logiciels payant font très bien ce travail mais ont quand même un certain coût. Pour pallier à cela, il existe des gestionnaires de projets Open Source, dont [Redmine](http://www.redmine.org/) fait parti.
 
 Redmine est une véritable usine à gaz, permettant de réaliser beaucoup de choses. Il a l'avantage de pouvoir discuter avec beaucoup d'autres serveurs (tel que Gitlab ou Jenkins) et d'être de base très complet. Des plugins sont aussi disponibles et il est possible d'en créer soi-même.
 
@@ -28,10 +28,11 @@ Pour cela il va falloir vous assurer d'avoir les prérequis suivants :
 
 * Une machine Ubuntu (ou Debian-like) avec un accès **root**
 * Le programme curl d'installé (`sudo apt-get install curl`)
+* Des connaissances en Linux et de la patience...
 
 # Prérequis de Redmine
 
-Redmine a besoin de pas mal de choses pour pouvoir fonctionner. Il utilise Ruby et MySQL (ou une autre base de données), ainsi que les programmes Gem, Bundler et plusieurs autres dépendances. Il est important de consulter les [prérequis de Redmine](http://www.redmine.org/projects/redmine/wiki/RedmineInstall#Requirements) avant de se lancer dans une installation.
+Redmine a besoin de pas mal de choses pour pouvoir fonctionner. Il utilise Ruby et MySQL (ou une autre base de données), ainsi que les programmes Gem, Bundler et plusieurs autres dépendances. Il est toujours important de consulter les [prérequis de Redmine](http://www.redmine.org/projects/redmine/wiki/RedmineInstall#Requirements) avant de se lancer dans une installation.
 
 A ce jour (Mars 2016), voici ce que préconise la documentation :
 
@@ -43,13 +44,13 @@ A ce jour (Mars 2016), voici ce que préconise la documentation :
 
 Base de Données Supportées : MySQL 5.0 ou plus, PostgreSQL 8.2 ou plus, Microsoft SQL Server 2008 (Redmine 2.X) ou 2012 (Redmine 3.X) et _SQLite 3_.
 
-Comme vous pouvez le voir, Redmine supporte pas mal de version de Ruby différentes et de base SQL. Ce qui est pratique sans l'être. Ruby et Rails sont assez sensibles dès qu'on mélange plusieurs versions ou leurs librairies.
+Comme vous pouvez le voir, Redmine supporte pas mal de version de Ruby différentes et de base SQL. Ce qui est pratique sans l'être. Ruby et Rails sont assez sensibles dès qu'on mélange plusieurs versions ou leurs librairies, certaines versions de Ruby ont des bugs connus, etc...
 
-Dans ce tutoriel, nous allons donc utiliser Ruby 2.1 et MySQL pour installer Redmine en 3.X.
+Dans ce tutoriel, nous allons donc utiliser Ruby 2.1 (qui apparemment ne pose aucun souci) et MySQL pour installer Redmine en 3.X.
 
 ## Créer un utilisateur dédié
 
-Pour des raisons de bonnes pratiques, il est toujours mieux de créer un utilisateur qui va s'occuper du service créé. Personnellement j'ai créé un utilisateur qui se nomme `redmine` mais ce n'est pas une obligation.
+Pour des raisons de bonnes pratiques, il est toujours mieux de créer un utilisateur qui va s'occuper du service créé. Personnellement, j'ai créé un utilisateur qui se nomme `redmine` pour garder une logique mais ce n'est pas une obligation.
 
 J'ai aussi choisi de mettre son _HOME_ dans un répertoire différent du _HOME_ habituel (`/home/`) mais ce n'est pas obligatoire non plus.
 
@@ -137,7 +138,7 @@ sudo apt-get install mysql-server libmysqlclient-dev
 
 Vous devrez certainement créer un mot de passe pour le compte `root` de MySQL. Retenez le bien afin de pouvoir y accéder par la suite.
 
-Félicitations ! Vous avez maintenant tous les prérequis nécessaires pour pouvoir installer Redmine.
+Félicitations ! Vous avez tous les prérequis nécessaires pour pouvoir installer Redmine.
 
 # Installation de Redmine
 
@@ -323,11 +324,13 @@ Vous pouvez à tout moment arrêter le serveur en tapant `CTRL-C`.
 
 # Créer le Service Redmine
 
-Maintenant vous avez un serveur Redmine opérationnel. Mais par contre il n'est accessible que sur la boucle locale du serveur (localhost) et implique d'aller sur le port 3000. Tout cela n'est pas très joli. Nous allons donc créer un service à l'aide la gem _unicorn_ et un serveur Web grâce à Nginx.
+Vous avez enfin un serveur Redmine opérationnel... Mais par contre il n'est accessible que sur la boucle locale du serveur (localhost) et implique d'aller sur le port 3000. De plus, il nous indique que l'on ne doit pas utiliser Redmine de cette manière en production. Bref, tout cela n'est pas très joli.
+
+Nous allons donc créer un service à l'aide la gem _unicorn_ et un serveur Web grâce à Nginx.
 
 ## Installer Unicorn
 
-Pour pouvoir utiliser _unicorn_, nous devons d'abord l'installer. Ne touchez pas au Gemfile de Redmine et utilisez plutôt le fichier `Gemfile.local` dédié à ce genre de manipulation. Ajoutez la gem unicorn (`vi Gemfile.local`) à ce fichier :
+Pour pouvoir utiliser _unicorn_, nous devons d'abord l'installer. Ne touchez pas au Gemfile de Redmine et utilisez plutôt le fichier `Gemfile.local` dédié à ce genre de manipulation. Ajoutez la gem _unicorn_ à ce fichier (`vi Gemfile.local`) :
 
 ```conf
 gem 'unicorn'
@@ -339,7 +342,7 @@ Puis relancer Bundler afin d'installer la nouvelle gem :
 bundle install --without development test rmagick
 ```
 
-Vous devriez voir l'installation de nouvelles gems.
+Vous devriez voir l'installation de nouvelles gems (_unicorn_ et ses dépendances).
 
 ## Configuration pour Unicorn
 
@@ -368,11 +371,11 @@ touch /var/log/redmine/unicorn.stderr.log
 touch /var/log/redmine/unicorn.stdout.log
 ```
 
-Voilà, unicorn a maintenant sa configuration de prête. Nous allons maintenant créer le service associé.
+Voilà, _unicorn_ est configuré. Nous allons à présent créer le service associé.
 
 ## Service Unicorn-Redmine
 
-Pour créer un service pour redmine, il va falloir le rajouter dans `/etc/init.d/`. Attention à bien vérifier les chemins que vous allez mettre dans ce fichier, une simple erreur dans un des chemins et le service ne marchera pas.
+Pour créer un service pour Redmine, il va falloir le rajouter dans `/etc/init.d/`. Attention à bien vérifier les chemins que vous allez mettre dans ce fichier, une simple erreur dans un des chemins et le service ne marchera pas.
 
 Heureusement il y aura toujours les logs définis à l'étape précédente pour vous aider à débugger en cas de problème !
 
@@ -441,7 +444,7 @@ case "$1" in
 esac
 ```
 
-Si vous avez suivi scrupuleusement tout ce tutoriel, vous n'aurez normalement aucune modification à faire sur ce fichier. Mais vérifiez quand même les différentes variables définies dans celui-ci.
+Si vous avez suivi scrupuleusement tout ce tutoriel, vous n'aurez normalement aucune modification à faire sur ce fichier. Mais vérifiez quand même les différentes variables définies dans celui-ci et comme dit précédemment les différents chemins.
 
 Donnez ensuite les droits sur ce fichier et activez le service au démarrage du serveur :
 
@@ -460,7 +463,7 @@ Si vous avez une erreur, n'hésitez pas à consulter vos logs (`tail -f /var/log
 
 # Installation du serveur Web
 
-Maintenant nous allons installer et configurer un serveur virtuel pour notre serveur Redmine. Nous utiliserons Nginx comme serveur Web.
+Il ne reste plus qu'à installer et configurer un serveur virtuel pour notre serveur Redmine. Nous utiliserons Nginx comme serveur Web.
 
 ## Installation de Nginx
 
@@ -480,7 +483,7 @@ server {
     #listen [::]:80 default_server ipv6only=on;
 ```
 
-Créez votre fichicer de configuration pour votre serveur virtuel (`vi /etc/nginx/sites-available/redmine`) et ajoutez les lignes ci-dessous :
+Créez votre fichier de configuration pour votre serveur virtuel (`vi /etc/nginx/sites-available/redmine`) et ajoutez les lignes ci-dessous :
 
 ```nginx
 # Nomme et définit le socket
@@ -526,7 +529,7 @@ Enregistrez et quittez. Maintenant votre serveur virtuel est configuré, vous n'
 sudo service nginx restart
 ```
 
-Félicitztions ! Vous devriez pouvoir accéder à votre serveur de production via l'url suivante : [http://redmine.local.fr](http://redmine.local.fr).
+Félicitations ! Vous devriez pouvoir accéder à votre serveur de production via l'url suivante : [http://redmine.local.fr](http://redmine.local.fr).
 
 ## Quelques solutions aux erreurs courantes
 
@@ -543,4 +546,4 @@ N'oubliez pas non plus de **relancer Nginx** à chaque modification sur ses fich
 
 # Conclusion
 
-Pour résumer, vous savez maintenant comment monter un serveur Redmine stable. Redmine possède ensuite de nombreuses configurations comme les droits, les dépendances entre projets, les différents tickets, des champs personnalisables, etc. Il possède aussi un catalogue de plugins bien fourni, dont un qui vous permettra de synchroniser les utilisateurs Redmine via votre Active Directory. Ou encore un plugin qui vous permettra de lier les tickets de Redmine aux commits de Git (ou d'un serveur Gitlab).
+Vous savez maintenant comment monter un serveur Redmine stable. Redmine possède ensuite de nombreuses configurations comme les droits, les dépendances entre projets, les différents tickets, les champs personnalisables, etc. Il possède aussi un catalogue de plugins bien fourni, dont un qui vous permettra de synchroniser les utilisateurs Redmine via votre Active Directory. Ou encore un plugin qui vous permettra de lier les tickets de Redmine aux commits de Git (ou d'un serveur Gitlab).

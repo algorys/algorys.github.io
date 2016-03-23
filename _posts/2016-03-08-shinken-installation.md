@@ -3,7 +3,7 @@ layout: post
 title: Installer Shinken
 modified:
 categories: [Tuto]
-description: comment installer Shinken
+description: Comment installer Shinken
 tags: [tutoriel, shinken, monitoring, nagios]
 image:
   feature:
@@ -20,15 +20,19 @@ Dans ce tutoriel, nous allons voir comment installer [Shinken](http://www.shinke
 
 # Les différentes installations de Shinken
 
-Si vous êtes allé faire un tour sur la documentation de Shinken, vous avez pu voir qu'il existe 3 manière différentes : via [Pip](https://pip.pypa.io/en/stable/) (l'installateur de modules de Python) qui est souvent à jour, via les paquets qui ne sont parfois pas à jour et enfin via les sources du [dépôt Shinken](https://github.com/naparuba/shinken).
+Si vous êtes allé faire un tour sur la documentation, vous avez pu voir qu'il existe 3 manières différentes d'installer Shinken : 
 
-Libre à vous d'installer Shinken comme bon vous semble. Mais le **plus important** est de n'utiliser qu'**une seule manière** pour l'installation et les mises à jour de Shinken ! En aucun cas vous devez mélanger plusieurs type d'installations sous peine de voir votre serveur planter, avoir des bugs ou ne plus marcher du tout ! Je vous invite d'ailleurs de vous faire un petit fichier dans votre installation pour noter comment vous avez installé Shinken et ses différents modules / librairies.
+* via [Pip](https://pip.pypa.io/en/stable/) (l'installateur de modules de Python) qui est souvent à jour.
+* via les paquets qui ne sont parfois pas à jour
+* via les sources du [dépôt Shinken](https://github.com/naparuba/shinken) que nous allons utiliser ici.
+
+Libre à vous d'installer Shinken comme bon vous semble. Mais le **plus important** est de n'utiliser qu'**une seule manière** pour l'installation et les mises à jour de Shinken ! En aucun cas, vous devez mélanger plusieurs type d'installations sous peine de voir votre serveur planter, avoir des bugs ou ne plus marcher du tout ! Je vous invite d'ailleurs de vous faire un petit fichier dans votre installation pour noter comment vous avez installé Shinken et ses différents modules / librairies.
 
 # Prérequis
 
 Shinken est écrit en Python, il aura donc besoin d'une version de Python pour fonctionner (version 2.6 ou supérieur et si possible 2.7 pour de meilleurs performances). Il aura aussi besoin de [python-pycurl](http://pycurl.io/) et de [setuptools](https://pypi.python.org/pypi/setuptools/).
 
-Voici les différentes étapes pour ces dépendances, en sachant que ce tutoriel a été fait sur un Ubuntu Server 14.04.4 LTS :
+Voici les différentes étapes pour ces dépendances, en sachant que ce tutoriel a été fait sur un Ubuntu Server 14.04.4 LTS.
 
 ## Installer Python
 
@@ -79,13 +83,13 @@ Voilà, votre dossier Shinken est prêt, vous allez pouvoir lancer l'installatio
  
 # Installer Shinken
 
-Vous allez maintenant pouvoir lancer l'installation de Shinken avec Python. Mais avant cela, Shinken aura besoin d'un utilisateur `shinken` pour fonctionner. Crééz-le avant de lancer le setup :
+Vous allez maintenant pouvoir lancer l'installation de Shinken avec Python. Mais pour cela, il aura besoin d'un utilisateur `shinken`. Crééz-le avant de lancer le setup :
 
 ```bash
 adduser shinken
 ```
 
-Une fois cela fait, vous pouvez la commande d'installation :
+Une fois cela fait, vous pouvez lancer la commande d'installation :
 
 ```bash
 cd ~/shinken
@@ -149,10 +153,10 @@ Félicitation, votre Shinken est maintenant opérationnel et tous ses démons so
 
 # Installer l'interface Web
 
-Pour que vous puissiez voir si vos hôtes sont bien répertoriés et leurs états, une interface Web est disponible pour Shinken. Il existe 2 versions de cette interface :
+Pour que vous puissiez voir d'une manière plus agréable si vos hôtes sont bien monitorés, une interface Web est disponible pour Shinken. Il existe 2 versions de cette interface :
 
 * webui : plus trop maintenue par les développeurs, cette interface est amenée à disparaître. Mais elle est toujours fonctionnelle.
-* webui2 : plus à jour, ergonomique et en plein développement. Elle n'est pas encore complète mais possède déjà tout ce qu'il faut pour être utile.
+* webui2 : plus à jour, ergonomique et en plein développement. Elle n'est pas encore complète mais possède déjà tout ce qu'il faut pour être fonctionnelle.
 
 Connectez vous en tant qu'utilisateur **shinken** :
 

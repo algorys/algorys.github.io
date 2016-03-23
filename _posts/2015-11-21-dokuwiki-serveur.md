@@ -3,7 +3,7 @@ layout: post
 title: Installer Dokuwiki
 modified:
 categories: [Tuto]
-description: tutoriel Dokuwiki serveur debian
+description: Tutoriel Dokuwiki
 tags: [tutoriel, dokuwiki, wiki]
 image:
   feature:
@@ -23,6 +23,7 @@ Si vous ne connaissez pas ce genre d'outil, rendez-vous sur [Wikipédia : Wiki](
 [Dokuwiki](https://www.dokuwiki.org/) est simple à installer et à utiliser. De plus il est possible de faire beaucoup de choses avec, car le développement de vos propres plugins est assez facile pour peu que vous ayez quelques notions de programmation.
 
 ## A savoir
+
 L'intérêt d'un tel site, c'est qu'il vous permet d'établir une documentation interne complète, que ce soit pour votre entreprise ou toute autre organisation, jeu, univers, etc... 
 
 Ce tutoriel est normalement compatible avec n'importe quel debian-like (Debian, Ubuntu, Mint...). Les commandes devront donc être adaptées si vous utilisez d'autres distributions Linux.
@@ -64,12 +65,12 @@ sudo wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
 Décompressez l'archive téléchargée et renommez la :
 
 ```bash
-sudo tar -xzvf dokuwiki-stable.tgz
+sudo tar xzvf dokuwiki-stable.tgz
 sudo mv dokuwiki-DATE-VERSION monwiki
 sudo rm dokuwiki-stable.tgz
 ```
 
-Donnez les droits à votre utilisateur (www-data pour Apache) :
+Donnez les droits à l'utilisateur du serveur Web (`www-data` pour Apache) :
 
 ```bash
 sudo chown -R www-data:www-data data conf
@@ -121,7 +122,7 @@ sudo a2ensite monwiki.conf
 sudo service apache2 reload
 ```
 
-Ouvrez votre explorateur et entrez l'adresse suivante en remplaçant "ip_serveur" par votre ip :
+Ouvrez votre navigateur et entrez l'adresse suivante en remplaçant `ip_serveur` par votre ip :
 
 ```php
 http://ip_serveur/install.php

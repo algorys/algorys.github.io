@@ -3,7 +3,7 @@ layout: post
 title: Installer GLPI
 modified:
 categories: [Tuto]
-description: comment installer glpi
+description: Comment installer glpi
 tags: [tutoriel, glpi, parc]
 image:
   feature:
@@ -16,7 +16,7 @@ date: 2016-03-07T16:52:05+01:00
 
 # Introduction
 
-[GLPI](http://www.glpi-project.org/) est un serveur de Gestionnaire de Parc Informatique qui permet de gérer les ressources de son parc que ce soit au niveau matériel, logiciel ou bien réseau. Il permet, en outre, grâce à ses différents plugins, de s'adapter à quasiment tout type de parc informatique. De plus GLPI est très facile à installer, il peut discuter avec d'autres serveurs pour collecter automatiquement ses données ([OCS](http://www.ocsinventory-ng.org/fr/), [Fusion-Inventory](http://fusioninventory.org/)) et peut même faire du monitoring en se couplant avec un serveur [Shinken](http://www.shinken-monitoring.org/) (ou [Nagios](https://www.nagios.org/)).
+[GLPI](http://www.glpi-project.org/) est un gestionnaire de Parc Informatique qui permet de gérer les ressources de son parc, que ce soit au niveau matériel, logiciel ou bien réseau. Il permet, en outre, grâce à ses différents plugins, de s'adapter à quasiment tout type de parc informatique. De plus GLPI est très facile à installer, il peut discuter avec d'autres serveurs pour collecter automatiquement ses données ([OCS](http://www.ocsinventory-ng.org/fr/), [Fusion-Inventory](http://fusioninventory.org/)) et peut même faire du monitoring en se couplant avec un serveur [Shinken](http://www.shinken-monitoring.org/) (ou [Nagios](https://www.nagios.org/)).
 
 # Prérequis
 
@@ -28,7 +28,7 @@ Pour installer GLPI, vous devez avoir certains prérequis :
 
 # Préparation de MySQL
 
-Pour que GLPI puisse fonctionner, il va falloir lui donner une base de données pour travailler. Si vous n'avez pas accès au serveur MySQL ou que vous n'êtes pas administrateur du serveur, il faudra vous assurer d'avoir les éléments suivants : l'adresse du serveur MySQL, votre identifiant MySQL, votre mot de passe MySQL et le nom de la base qui vous a été attribuée.
+Pour que GLPI puisse fonctionner, il va falloir lui donner une base de données pour travailler. Si vous n'avez pas accès au serveur MySQL ou que vous n'êtes pas administrateur du serveur, il faudra vous assurer d'avoir les éléments suivants : l'adresse du serveur MySQL, votre identifiant MySQL, votre mot de passe MySQL et le nom de la base qui vous a été attribuée, ainsi que les droits dessus.
 
 Rentrez dans MySQL :
 
@@ -113,7 +113,7 @@ sudo a2ensite glpi.conf
 sudo service apache2 reload
 ```
 
-> Il peut arriver que le site par défaut d'Apache2 pose problème et vous emmène sur la page d'accueil d'Apache au lieu de celle de GLPI. Dans ce cas, désactivez-le `a2dissite 000-default.conf` et recharger la configuration d'Apache2.
+> Il peut arriver que le site par défaut d'Apache2 pose problème et vous emmène sur la page d'accueil d'Apache au lieu de celle de GLPI. Dans ce cas, désactivez-le (`a2dissite 000-default.conf`) et recharger la configuration d'Apache2.
 
 # Configurer votre DNS
 
@@ -141,7 +141,7 @@ Maintenant, si vous ouvrez votre navigateur sur l'adresse suivante : [http://glp
 Vous n'avez plus qu'à suivre les différentes étapes :
 
 * Sélectionnez votre language et cliquez sur **OK**.
-* Acceptez ensuite les termes et la licence.
+* Acceptez ensuite les Termes et Conditions et la Licence.
 * Après GLPI vous demandera si c'est une nouvelle version ou une mise à jour. Cliquez sur **Installer**. (Comme vous l'avez peut-être deviné, les mises à jour de GLPI se feront quasiment de la même manière.)
 * Enfin GLPI va vérifier votre environnement pour voir si tout est correct. Normalement, vous devriez avoir pas mal d'alertes signalées par des triangles rouges. Cela indique que GLPI n'a pas encorte tout ce qu'il veut. Notament certaines dépendances et certains droits.
 
@@ -213,4 +213,4 @@ Félicitations ! Votre serveur GLPI est prêt.
 
 GLPI est très facile à monter comme serveur et (dans de futurs tutoriels) vous verrez qu'il est capable de faire beaucoup de choses automatiquement. N'hésitez pas à fouiller dans le [catalogue des plugins](http://plugins.glpi-project.org/#/). Il est très fourni et plutôt bien fait : il permet de s'abonner aux différents plugins, de les rechercher par type et offre un lien (si possible) vers leurs dépôts.
 
-De plus, la communauté GLPI est très sympathique et réactive, pour peu qu'on se donne la peine de faire des recherches un minimum avant de poser des questions.
+De plus, la communauté GLPI est très sympathique et réactive, pour peu qu'on se donne la peine de faire des recherches, un minimum, avant de poser des questions.
