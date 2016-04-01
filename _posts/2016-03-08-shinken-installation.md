@@ -300,7 +300,7 @@ Et connectez vous sur l'interface Web avec votre identifiant et le nouveau mot d
 
 # Commandes et Nagios Plugins
 
-Comme vous pouvez le voir sur l'interface web (ou dans les logs du `scheduler` de Shinken), le seul _hôte_ présent s'appelle **localhost**. Vous devirez même voir l'erreur suivante :
+Comme vous pouvez le voir sur l'interface web (ou dans les logs du `scheduler` de Shinken), le seul _hôte_ présent s'appelle **localhost**. Vous allez peut-être même voir l'erreur suivante :
 
 ```bash
 [Errno 2] No such file or directory
@@ -308,7 +308,7 @@ Comme vous pouvez le voir sur l'interface web (ou dans les logs du `scheduler` d
 
 Et l'hôte sera signalé `DOWN`, c'est à dire que Shinken vous indique que l'hôte est "tombé" ! Pourtant votre serveur fonctionne parfaitement et fait tourner Shinken !
 
-C'est en fait normal car il vous manque quelque chose de très important : des commandes de `check` ! 
+C'est en fait normal car il vous manque quelque chose de très important : des commandes de `check` ! Et si vous n'avez pas installer ce qu'il faut, Shinken ne trouvera pas la commande à exécuter, et marquera donc l'hôte `DOWN`.
 
 ## Les commandes et les "paths"
 

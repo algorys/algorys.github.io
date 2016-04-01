@@ -200,7 +200,7 @@ define module {
     port            3306
     database        glpi           # Le nom de la base GLPI
     user            shinkenbroker  # L'utilisateur créé dans MySQL
-    password        cthulhu        # le mot de passe de l'utilisateur
+    password        password        # le mot de passe de l'utilisateur
 [...]
 }
 ```
