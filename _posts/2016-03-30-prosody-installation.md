@@ -119,7 +119,7 @@ Puis nous allons l'indiquer dans notre configuration (`vi conf.avail/mail.fr.cfg
 
 ```lua
 --- Nom de l'hôte virtuel ---
-VirtualHost "alpi.fr"
+VirtualHost "mail.fr"
 
 modules_enabled = {
     "saslauth";
@@ -390,7 +390,7 @@ plugin_paths = { "/usr/lib/prosody/modules", "/usr/lib/prosody/prosody-modules"}
 
 Redémarrez ensuite **prosody** pour appliquer le changement.
 
-## CXhemins des configurations
+## Chemins des configurations
 
 Vous pouvez également préciser les chemins vers vos configurations (toujours dans le fichier de configuration principal) :
 
