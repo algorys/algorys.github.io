@@ -18,7 +18,7 @@ sidebar_link: true
 <h2>Développeur / Intégrateur Logiciel</h2>
 
 <p>
-Après avoir fait une formation de Technicien Supérieur en Réseau Informatique et Télécom, je me suis peu à peu penché vers le développement et l'intégration.
+Après avoir fait une formation de Technicien Supérieur en Réseau Informatique et Télécom, je me suis, peu à peu tourné, vers le développement et l'intégration.
 
 Je suis une personne parfaitement auto-didacte et tenace.
 </p>
@@ -26,9 +26,9 @@ Je suis une personne parfaitement auto-didacte et tenace.
 <h2>Développement</h2>
 
 <p>
-Fan du language Python, je participe le plus activement possible au projet <a href="http://www.alignak.net">Alignak</a>. Une solution complète de Monitoring, menée entre autre par <a href="https://github.com/ddurieux">David Durieux</a> et <a href="https://github.com/mohierf">Frédéric MOHIER</a> qui m'ont beaucoup aidé.
+Fan du language Python, je participe le plus activement possible au projet <a href="http://www.alignak.net">Alignak</a>. Une solution complète de Monitoring, menée entre autre par <a href="https://github.com/ddurieux">David Durieux</a> et <a href="https://github.com/mohierf">Frédéric MOHIER</a> qui m'ont beaucoup aidé lors de mon arrivée dans ce projet (je les en remercie).
 
-Je m'occupe principalement du client "lourd" dans ce projet (<a href="https://github.com/Alignak-monitoring-contrib/alignak-app">Alignak-app</a>).
+Je m'occupe principalement du client "lourd" dans ce projet (<a href="https://github.com/Alignak-monitoring-contrib/alignak-app">Alignak-app</a>), en utilisant le module PyQt5 de Python.
 </p>
 
 <p>
@@ -39,8 +39,6 @@ Je développe également de nombreux plugins pour <a href="https://www.dokuwiki.
 Je partage quand je peux des scripts Python qui m'ont été utiles.
 </p>
 
-
-
 <h2>Intégration</h2>
 
 <p>
@@ -50,6 +48,6 @@ En intégration logicielle, je m'occupe surtout d'intégrer des logiciels fait e
 <p>
 Ce qui m'a amené à installer, administrer et utiliser des logiciels comme Redmine, Gitlab (et Git bien sûr), Jenkins, Dokuwiki, CMake, GCC, Clang, MSVC.<br><br>
 
-J'ai donc créé une boucle d'intégration complète qui se déclenche selon plusieurs conditions: push, nighly, sur différentes plateformes, etc... et qui compile et teste les sources des développeurs.
+J'ai donc créé une boucle d'intégration complète qui se déclenche selon plusieurs conditions: push, nighly, sur différentes plateformes, etc... et qui compile et teste les sources des développeurs. L'automatisation est quelque chose de prenant.
 </p>
 
