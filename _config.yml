@@ -3,9 +3,9 @@ markdown:         kramdown
 highlighter:      rouge
 
 # Setup
-title:            Hydeout
-tagline:          'Algorys Blog'
-description:      "<h1>Algorys Blog</h1><h3>Developpement, Jeux et Nouvelles</h3>"
+title:            Algorys
+tagline:          'Blog'
+description:      "<h2>Blog</h2><h3>Développement, Jeux et Nouvelles</h3>"
 url:              https://algorys.github.io
 baseurl:          # the optional subpath of your site, e.g. "/blog"
 
