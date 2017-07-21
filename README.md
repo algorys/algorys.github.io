@@ -1,6 +1,6 @@
-# Sources du Blog d'Algorys
+# Blog d'Algorys
 
-Ce dépôt sert à générer mon blog [http://algorys.github.io](http://algorys.github.io).
+Ce dépôt sert à générer mon blog perso: [http://algorys.github.io](http://algorys.github.io).
 
 ## Pour info
 
