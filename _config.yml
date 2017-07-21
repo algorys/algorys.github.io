@@ -1,63 +1,27 @@
-title:            Sysadmin & Intégration
-description:      Le Blog d'Algorys
-disqus_shortname: algorysblog
-reading_time:     true
-words_per_minute: 200
-# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
-# When testing locally leave blank or use http://localhost:4000
-url: http://algorys.github.io
+# Dependencies
+markdown:         kramdown
+highlighter:      rouge
 
-# Owner/author information
-owner:
-  name:           Estrada Matthieu
-  avatar:         avatar.jpg
-  bio:            "Développeur & Intégrateur amateur, avec une formation TSRIT. Je partage mes connaissances."
-  email:          "ttamalfor-not4spam@gmail.com"
-  # Social networking links used in footer. Update and remove as you like.
-  twitter: agshmne        
-  #facebook:       
-  github: algorys        
-  stackexchange: http://stackoverflow.com/users/4303902/algorys
-  #linkedin:       
-  #instagram:      
-  #flickr:         
-  #tumblr:         
-  # google plus id, include the '+', eg +mmistakes
-  #google_plus:    +yourid
+# Setup
+title:            Hydeout
+tagline:          'Algorys Blog'
+description:      "<h1>Algorys Blog</h1><h3>Developpement, Jeux et Nouvelles</h3>"
+url:              https://algorys.github.io
+baseurl:          # the optional subpath of your site, e.g. "/blog"
 
-# Background image to be tiled on all pages
-background: 
+author:
+  name:           'Estrada Matthieu'
+  url:            https://twitter.com/agshmne
 
-# Analytics and webmaster tools stuff goes here
-google_analytics: UA-74831420-1
-google_verify:      
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:         
+paginate:         5
 
-# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    Europe/Paris
-future:      true
-highlighter: rouge
-markdown:    kramdown
 gems:
-  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-gist
   - jekyll-paginate
-sass:
-  sass_dir: _sass
-  style: compressed
 
-# https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title/
-
-# Amount of post to show on home page
-paginate: 2
-
-kramdown:
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  input: GFM
-
-include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
+# Custom vars
+version:            3.4.1
+sidebar_home_link:  true
+github:
+  repo:             https://github.com/algorys/algorys.github.io
