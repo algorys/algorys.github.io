@@ -1,0 +1,6 @@
+# Folders & Files to ignore
+.sass-cache/
+_site/
+_vendor/
+
+

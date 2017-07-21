@@ -1,87 +1,52 @@
 ---
 layout: page
-title: About
+title: A Propos
 permalink: /about/
 ---
-<div class="man-title">
-  UP AND RUNNING WITH DevJournal
-</div>
+
 <div class="manual manual-title">
-  Posting
-  </div>
-<p>  <div class="manual-content">
-
-      - Create a .markdown file inside <code class="highlighter-rouge">_posts</code> folder.<br />
-      - Name the file according to the format YY-MM-DD-[short name for your post].<br />
-      &nbsp;&nbsp;&nbsp;<code>2016-03-30-i-love-design.markdown</code><br />
-      - Write the <a href="jekyll">Front Matter</a> and content in the file.<br><br>
-      <div class="example">
-
-        <div class="highlight">
-        <pre>
-          ---
-          layout: post | default | page
-          title:  String<span class="hint"> Post Title</span>
-          date:   Time Stamp
-          categories: String | Array of Strings<span class="hint"> Category / Categories </span>
-          ---
-        </pre>
-        </div>
-
-      </div>
-      <div class="example">
-        <div class="highlight">
-        <pre>
-        ---
-        layout: post
-        title:  "The One with the Blackout"
-        date:   2016-03-30 19:45:31 +0530
-        categories: ["life", "friends"]
-        ---
-      </pre>
-    </div>
-      </div>
-
-
-
-</p>
+  Estrada Matthieu<br>
+  Développeur & Intégrateur
 </div>
-<p><br /></p>
 
-  <div class="manual manual-title">
-  Create Pages
-  </div>
-<p>  <div class="manual-content">
+<div class="manual-content">
+Ayant débuté par une formation TSRIT, j'ai ensuite évolué vers de l'Intégration de Logiciels et du Développement (en entreprise et en autodidacte).
+</div>
 
-      - Create a .md file in the root directory.<br />
-      - Name the file with the desired page link name.<br />
-        &nbsp;&nbsp;&nbsp;<code>about.md</code><br />
-          &nbsp;&nbsp;&nbsp;<code>design.md</code><br />
-      - Write the <a href="jekyll">Front Matter</a> and content in the file.<br><br>
-      <div class="highlight">
+<div class="manual manual-title">Développement / Intégration</div>
 
+<div class="manual-content">
 
-        <pre>
-          ---
-          layout: page
-          title: String <span class="hint">Title of the webpage</span>
-          permalink: / String / <span class="hint">Permalink for the webpage</span>
-          tagline: String <span class="hint">Optional DevJournal Feature : Tagline for the page</span>
-          ---
-      </pre><br />
-    </div><br>
-      <div class="highlight">
+<ul>
+  <li><b>Languages:</b> Python, Bash, Php, Java</li>
+  <li><b>Logiciels:</b> CMake, Compilateurs (GCC, Clang, MSVC), Gitlab, Git, Jenkins, Dokuwikii, GLPI, etc...</li>
+</ul>
 
-        <pre>
-        ---
-        layout: page
-        title:  "Science"
-        permalink:   /science/
-        tagline : "Humanity is overrated."
-        ---
-      </pre>
-      </div>
+</div>
 
+<div class="manual manual-title">Mes Projets</div>
 
-  </div>
-</p>
+<div class="manual-content">
+
+Le projet <a href="https://github.com/Alignak-monitoring">Alignak</a> est un projet qui me tient à coeur. Les développeurs de ce projets (David Durieux et Frédéric Mohier) m'ont beaucoup aidé et épaulé 
+ ma progression en éveloppement.
+<br><br>
+
+Je maintiens l'<a href="https://github.com/Alignak-monitoring-contrib/alignak-app">Application Desktop d'Alignak</a>, développée en Python et à l'aide du framework <b>PyQt</b>.
+<br><br>
+
+Le projet <a href="https://www.dokuwiki.org">Dokuwiki</a> est également un projet que j'affectionne. Je développe pas mal de plugins pour ce logiciel en PHP: Redissue, Redproject, Bootnote, etc...
+<br><br>
+
+J'essaie de partager aussi des scripts en Python que j'ai fait et qui peuvent servir ou inspirer d'autres gens.
+
+J'ai également un site web: http://sysadmin.cool où je regroupe plusieurs tutoriels pour installer ou utiliser les logiciels que je cotoie tous les jours.
+</div>
+
+<div class="manual manual-title">Mes Passions</div>
+
+<div class="manual-content">
+Je suis tout ce qui touche de loin ou de près la technologie, l'informatique ou les jeux. J'aime également la musique et les Jeux de Rôle sur table.
+
+</div>
+
